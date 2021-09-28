@@ -37,7 +37,7 @@ jobs:
           steps:
             - checkout
             - run: echo "build steps"
-            - run: npm install -g @angular/cli@latest
+            - run: npm install -g @angular/cli@latest firebase-tools
             - run: chmod +x sedconfig_uat.sh
             - run: ./sedconfig_uat.sh
             - run: npm install
