@@ -1,0 +1,20 @@
+{
+  "hosting": {
+    "site": "mx-seller-portal",
+    "public": "dist/seller-portal",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions"
+  }
+}

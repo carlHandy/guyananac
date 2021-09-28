@@ -1,0 +1,27 @@
+.input-with-labels {
+  ::ng-deep .mat-form-field-label-wrapper {
+    margin-top: 10px !important;
+  }
+
+  ::ng-deep .mat-input-element {
+    margin-top: 6px !important;
+  }
+
+  ::ng-deep .mat-form-field-subscript-wrapper {
+    margin-top: 25px !important;
+  }
+
+  ::ng-deep .mat-form-field {
+    margin-bottom: 25px !important;
+  }
+
+  ::ng-deep .mat-form-field-type-mat-select {
+    .mat-form-field-flex {
+      height: 53px !important;
+    }
+
+    .mat-select {
+      margin-top: 8px;
+    }
+  }
+}

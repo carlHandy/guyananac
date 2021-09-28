@@ -1,0 +1,244 @@
+:root {
+  --color-primary: #2c2e30;
+  --color-accent: #1fa0ba;
+  --color-secondary: #e7edf3;
+
+  --color-grey: #8e999f;
+  --color-light-grey: #f4f3ef;
+  --color-light-yellow: #fff7dd;
+  --color-light-blue: #d3e9fd;
+
+  --color-light-blue-2: #f2f5fa;
+  --color-light-blue-3: #d3e9fc;
+
+  --color-warn: #e13a34;
+  --color-success: #8dd31a;
+  --color-alert: #ff720a;
+  --color-info: #519fef;
+
+  --color-auction-upcoming: #f9b900;
+  --color-auction-live: #8dd31a;
+  --color-auction-completed: #b87ee5;
+  --color-auction-closed: #eb597b;
+  --color-auction-pending: #cc5399;
+  --color-auction-past: #02c5c7;
+  --color-auction-future: #cc5399;
+  --color-auction-pickup-completed: #2492ae;
+  --color-auction-cancelled: #e13b35;
+
+  --color-report-bids: #55db98;
+  --color-report-views: #a4acf6;
+  --color-report-count: #fdd080;
+  --color-report-sells: #fdc9b7;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+}
+
+// tailwindcss
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Archivo", sans-serif;
+}
+
+// fixes custom width for team card
+.w-400px {
+  width: 400px;
+}
+
+// fixes autocomplete form
+mat-search-google-maps-autocomplete {
+  div {
+    form {
+      div:first-child {
+        margin-right: 0px !important;
+      }
+    }
+  }
+}
+
+// covid training mark
+.covid-trainning {
+  position: relative;
+}
+.covid-trainning:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 25px;
+  right: 0;
+  bottom: 0;
+  background-image: url("assets/images/shield.png");
+  background-size: cover;
+  background-position: center;
+}
+
+// custom material input
+.mat-form-field {
+  min-width: 48px !important;
+}
+
+.mat-form-field-flex {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  align-items: start !important;
+}
+
+.mat-form-field-underline {
+  display: none;
+}
+
+.mat-form-field-infix {
+  border-top: 0 !important;
+  padding-top: 8px !important;
+  padding-bottom: 4px !important;
+}
+
+.mat-form-field-infix {
+  padding-top: 0;
+
+  .mat-form-field-label-wraper {
+    margin-top: 10px;
+  }
+  .mat-form-field-label {
+    text-transform: uppercase;
+    font-size: small;
+    letter-spacing: normal;
+    color: var(--color-grey) !important;
+  }
+}
+
+.mat-form-field-invalid.mat-form-field-appearance-fill .mat-form-field-flex {
+  border: 1px solid var(--color-warn);
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: #f5f7fb;
+  border: 1px solid #e5e9eb;
+  border-radius: 8px !important;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+// fixes new icon library size
+.las {
+  font-size: 32px;
+}
+
+// fixes material icons styles to new design
+a[mat-flat-button],
+button[mat-flat-button],
+button[mat-raised-button] {
+  border-radius: 9999px;
+  color: var(--color-white) !important;
+  min-width: 96px;
+  width: 100%;
+  height: 48px;
+  font-size: 12px;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+  text-transform: uppercase;
+}
+
+a[mat-flat-button] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button[disabled] {
+  background-color: var(--color-grey) !important;
+}
+
+a[mat-flat-button].border-button,
+button[mat-flat-button].border-button,
+button[mat-raised-button].border-button {
+  border-radius: 9999px;
+  background-color: white;
+  color: var(--color-primary) !important;
+  border: 2px solid var(--color-accent);
+  min-width: 96px;
+  width: 100%;
+  height: 48px;
+  font-size: 12px;
+}
+
+// fixes card style for new design
+.mat-card {
+  border-radius: 14px !important;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15) !important;
+  padding: 20px !important;
+}
+
+// fixes acordion to new design
+.mat-expansion-panel {
+  margin-bottom: 16px !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+
+  .mat-expansion-panel-header-title {
+    max-width: 180px !important;
+  }
+}
+
+// fixes material checkbox color
+.mat-checkbox-ripple .mat-ripple-element,
+.mat-checkbox-disabled.mat-accent .mat-checkbox-background {
+  border-radius: 0;
+  background-color: var(--color-grey) !important;
+}
+
+.mat-checkbox-ripple .mat-ripple-element,
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-checked.mat-checkbox-disabled.mat-accent
+  .mat-checkbox-background {
+  border-radius: 0;
+  background-color: var(--color-success) !important;
+}
+
+// fixes dialog styles
+.mat-dialog-container {
+  border-radius: 16px !important;
+}
+
+.mat-dialog-content {
+  max-height: 90vh !important;
+  width: 100% !important;
+  max-width: 500px !important;
+  margin: 0 auto !important;
+  padding: 16px 44px !important;
+}
+
+@media (max-width: 600px) {
+  .cdk-overlay-pane {
+    max-width: 95vw !important;
+  }
+  .mat-dialog-content {
+    max-height: 90vh !important;
+    padding: 2px 4px !important;
+  }
+  .mat-dialog-container {
+    padding: 16px !important;
+  }
+}
+
+// fixes sidebar width
+.sidenav {
+  max-width: 300px !important;
+}
+
+// fixes accordion padding
+.mat-expansion-panel-header {
+  padding-left: 10px !important;
+}

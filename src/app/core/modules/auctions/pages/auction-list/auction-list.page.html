@@ -1,0 +1,24 @@
+<header>
+  <ng-container *ngIf="invitations$ | async as invitations">
+    <ng-container *ngFor="let inv of invitations; trackBy: identify">
+      <app-team-invitation-box [invitation]="inv"></app-team-invitation-box>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="auctionInvitations$ | async as invitations">
+    <ng-container *ngFor="let inv of invitations; trackBy: identify">
+      <app-auction-invitation-box [invitation]="inv">
+      </app-auction-invitation-box>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="auctionTeamInvitations$ | async as invitations">
+    <ng-container *ngFor="let inv of invitations; trackBy: identify">
+      <app-auction-team-invitation-box
+        [invitation]="inv"
+      ></app-auction-team-invitation-box>
+    </ng-container>
+  </ng-container>
+</header>
+
+<div>
+  <app-auctions-table></app-auctions-table>
+</div>

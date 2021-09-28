@@ -1,0 +1,65 @@
+<div mat-dialog-content class="w-full">
+  <header class="mb-4">
+    <div class="w-full inline-flex justify-end">
+      <i class="las la-times cursor-pointer" mat-dialog-close></i>
+    </div>
+    <div class="w-full inline-flex justify-start mb-5">
+      <img src="assets/icons/invite_observer-team.svg" class="w-16" />
+    </div>
+    <h1 class="font-medium text-3xl mb-2">Invite Observer</h1>
+    <p class="text-xl">
+      Invite individuals or a team to observe the auction. Send out as many
+      invites as you like, just separate the email address with a comma.
+    </p>
+  </header>
+  <form [formGroup]="form" class="flex flex-col mt-4 input-with-labels">
+    <mat-radio-group formControlName="type" class="mb-4 flex ml-3">
+      <mat-radio-button
+        class="mr-3"
+        (change)="label = 'Email Address'"
+        value="seller"
+        >Individual</mat-radio-button
+      >
+      <mat-radio-button (change)="label = 'Enter Team Number'" value="team"
+        >Team</mat-radio-button
+      >
+    </mat-radio-group>
+    <mat-form-field class="mb-2">
+      <mat-label>{{label}}</mat-label>
+      <input
+        matInput
+        formControlName="value"
+        type="email"
+        [placeholder]="form.get('type').value === 'team' ? 'Team Number' : 'Seller Email'"
+        required
+      />
+      <mat-error *ngIf="form.get('value')?.hasError('required')"
+        >The {{label}} is required</mat-error
+      >
+      <mat-error
+        *ngIf="
+        form.get('value')?.hasError('email') ||
+        form.get('value')?.hasError('pattern')
+      "
+        >The email is invalid</mat-error
+      >
+    </mat-form-field>
+    <div class="flex">
+      <div class="mr-3">
+        <button
+          class="border-button"
+          mat-flat-button
+          mat-dialog-close
+          color="accent"
+        >
+          CANCEL
+        </button>
+      </div>
+      <div>
+        <button (click)="add()" mat-flat-button color="accent">
+          SEND INVITATION
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

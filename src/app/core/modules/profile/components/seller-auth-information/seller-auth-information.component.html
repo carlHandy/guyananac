@@ -1,0 +1,72 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <mat-card class="mb-5 w-full" *ngIf="vm.type === authType.FireAuth">
+    <div class="flex items-center justify-between mb-5">
+      <h1 class="font-medium text-3xl mb-4">User Login</h1>
+
+      <div *ngIf="!editMode">
+        <button (click)="toggleEditMode()" mat-flat-button color="accent">
+          EDIT
+        </button>
+      </div>
+
+      <div class="flex" *ngIf="editMode">
+        <div class="mr-2">
+          <button
+            class="border-button"
+            (click)="cancel(vm.email)"
+            mat-flat-button
+            color="accent"
+          >
+            CANCEL
+          </button>
+        </div>
+        <button
+          *ngIf="environment.allowEmailChange"
+          (click)="changeEmail()"
+          mat-flat-button
+          color="accent"
+        >
+          SAVE
+        </button>
+      </div>
+    </div>
+
+    <form [formGroup]="emailForm">
+      <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input
+          formControlName="newEmail"
+          matInput
+          type="text"
+          [value]="vm.email"
+        />
+        <mat-error *ngIf="emailForm.get('newEmail')?.hasError('required')"
+          >The Email is required</mat-error
+        >
+        <mat-error
+          *ngIf="
+            emailForm.get('newEmail')?.hasError('email') ||
+            emailForm.get('newEmail')?.hasError('pattern')
+          "
+          >The email is invalid</mat-error
+        >
+      </mat-form-field>
+    </form>
+
+    <div class="flex items-start">
+      <mat-form-field class="flex-grow">
+        <mat-label>Password</mat-label>
+        <input disabled matInput type="password" value="password" />
+      </mat-form-field>
+      <div class="ml-3 mt-1" *ngIf="editMode">
+        <button
+          (click)="changePassword(vm.email); editMode = false"
+          mat-flat-button
+          color="accent"
+        >
+          CHANGE PASSWORD
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</ng-container>

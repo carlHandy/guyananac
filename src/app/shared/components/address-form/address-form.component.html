@@ -1,0 +1,87 @@
+<form [formGroup]="addressFormGroup">
+  <div class="w-full grid grid-cols-2 lg:grid-cols-3 gap-x-2 lg:gap-x-4">
+    <mat-form-field class="w-full col-span-2">
+      <mat-label>Address</mat-label>
+
+      <input
+        appGooglePlaces
+        [countryCode]="countryLimit"
+        (selected)="syncAutoComplete($event)"
+        type="text"
+        class="form-control"
+        name="address"
+        required
+        formControlName="address"
+        matInput
+        placeholder="Search for address"
+      />
+      <i
+        *ngIf="addressFormGroup.get('address').valid && editMode"
+        matSuffix
+        class="las la-check text-success"
+      ></i>
+      <mat-error>The address required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-full col-span-1 lg:pl-1">
+      <mat-label>Unit/Suite</mat-label>
+      <input
+        matInput
+        formControlName="unitSuit"
+        type="text"
+        placeholder="Unit/Suite"
+      />
+      <i
+        *ngIf="addressFormGroup.get('unitSuit').valid && editMode"
+        matSuffix
+        class="las la-check text-success"
+      ></i>
+    </mat-form-field>
+    <mat-form-field class="w-full col-span-1 lg:pr-1">
+      <mat-label>City/Town</mat-label>
+      <input
+        matInput
+        formControlName="cityTown"
+        type="text"
+        placeholder="City/Town"
+      />
+      <i
+        *ngIf="addressFormGroup.get('cityTown').valid && editMode"
+        matSuffix
+        class="las la-check text-success"
+      ></i>
+      <mat-error>The City/Town is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-full col-span-1">
+      <mat-label>{{ provinceStateLabel }}</mat-label>
+      <mat-select formControlName="provinceState">
+        <mat-option
+          *ngFor="let state of getProvincesStates()"
+          [value]="state.short"
+        >
+          {{ state.name }}
+        </mat-option>
+      </mat-select>
+      <i
+        *ngIf="addressFormGroup.get('provinceState').valid && editMode"
+        matSuffix
+        class="las la-check text-success"
+      ></i>
+      <mat-error>The Province is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-full col-span-1">
+      <mat-label>{{ postalCodeLabel }}</mat-label>
+      <input
+        formControlName="postalCode"
+        matInput
+        type="text"
+        [placeholder]="postalCodeLabel"
+      />
+      <mat-error>The {{ postalCodeLabel }} is invalid</mat-error>
+      <i
+        *ngIf="addressFormGroup.get('postalCode').valid && editMode"
+        matSuffix
+        class="las la-check text-success"
+      ></i>
+    </mat-form-field>
+  </div>
+</form>

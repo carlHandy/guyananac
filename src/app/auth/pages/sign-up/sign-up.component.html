@@ -1,0 +1,221 @@
+<div
+  class="
+    w-screen
+    h-screen
+    bg-white
+    flex
+    justify-center
+    items-start
+    lg:items-center
+    bg-center bg-cover
+    overflow-x-hidden
+  "
+  style="background-image: url('assets/images/background_login.jpg')"
+>
+  <div
+    class="
+      w-full
+      max-w-4xl
+      h-full
+      rounded-3xl
+      relative
+      lg:flex lg:border-white lg:border-2
+      sign-up-box
+    "
+    style="height: 100%"
+  >
+    <div class="absolute left-1/2 mt-48 lg:mt-7">
+      <div
+        class="
+          animate__animated animate__slideInRight
+          relative
+          rounded-full
+          bg-primary
+          w-64
+          h-14
+          -left-1/2
+          flex
+          p-1.5
+          z-20
+        "
+      >
+        <div
+          class="
+            w-1/2
+            text-white
+            rounded-3xl
+            bg-accent
+            flex
+            justify-center
+            items-center
+          "
+        >
+          <h2 class="text-xs">SIGN UP</h2>
+        </div>
+        <div
+          class="
+            cursor-pointer
+            ml-4
+            w-1/2
+            rounded-3xl
+            text-white
+            flex
+            justify-center
+            items-center
+          "
+          routerLink="../sign-in"
+        >
+          <h2 class="text-xs">LOGIN</h2>
+        </div>
+      </div>
+    </div>
+    <div
+      class="
+        w-full
+        lg:w-1/2 lg:rounded-l-2xl
+        h-full
+        animate__animated animate__fadeIn
+      "
+    >
+      <div class="lg:h-full">
+        <div
+          class="
+            w-full
+            h-56
+            flex
+            justify-center
+            items-center
+            header-box
+            bg-center bg-cover
+            lg:hidden
+          "
+          style="background-image: url('assets/images/background_login.jpg')"
+        >
+          <img
+            class="h-16 animate__animated animate__fadeIn animate__delay-1s"
+            src="assets/images/logo.svg"
+            alt="Max sold logo"
+          />
+        </div>
+        <div class="bg-white px-8 pb-8 pt-20 lg:pt-28 h-full lg:rounded-l-2xl">
+          <div class="text-left">
+            <h1 class="mt-0 text-4xl">
+              Register for the MaxSold Seller Portal
+            </h1>
+            <p class="mt-3 text-base">
+              Discover the easiest, most effcient and proven way to quickly sell
+              all your household and business goods.
+            </p>
+          </div>
+          <div class="mt-3">
+            <app-auth-providers></app-auth-providers>
+          </div>
+          <div class="my-6 flex justify-end items-center">
+            <div class="flex-grow bg-light-grey" style="height: 1px"></div>
+            <span class="mx-4 text-grey">OR</span>
+            <div class="flex-grow bg-light-grey" style="height: 1px"></div>
+          </div>
+          <form
+            [formGroup]="signUpForm"
+            (ngSubmit)="registerEmailPassword()"
+            class="flex flex-col"
+          >
+            <mat-form-field class="mb-2">
+              <input
+                matInput
+                placeholder="Email"
+                formControlName="email"
+                required
+              />
+            </mat-form-field>
+            <div
+              class="mb-2"
+              *ngIf="
+                (signUpForm.get('email')?.errors?.email ||
+                  signUpForm.get('email')?.errors?.pattern) &&
+                signUpForm.get('email').touched
+              "
+            >
+              <mat-error>The email is invalid</mat-error>
+            </div>
+            <mat-form-field class="mb-2">
+              <input
+                matInput
+                [type]="showPassword ? 'text' : 'password'"
+                placeholder="Password"
+                formControlName="password"
+                required
+              />
+              <i
+                matSuffix
+                class="las cursor-pointer"
+                [ngClass]="showPassword ? 'la-low-vision' : 'la-eye'"
+                (click)="showPassword = !showPassword"
+              ></i>
+            </mat-form-field>
+            <mat-form-field class="mb-3">
+              <input
+                matInput
+                [type]="showPasswordConf ? 'text' : 'password'"
+                placeholder="Confirm Password"
+                formControlName="passwordConfirmation"
+                required
+              />
+              <i
+                matSuffix
+                class="las cursor-pointer"
+                [ngClass]="showPasswordConf ? 'la-low-vision' : 'la-eye'"
+                (click)="showPasswordConf = !showPasswordConf"
+              ></i>
+            </mat-form-field>
+            <div
+              *ngIf="
+                signUpForm.hasError('noEqual') &&
+                signUpForm.get('passwordConfirmation').touched
+              "
+              class="flex justify-center mb-3"
+            >
+              <mat-error>Passwords don't match</mat-error>
+            </div>
+            <div>
+              <button
+                *ngIf="!requesting; else loader"
+                mat-flat-button
+                [disabled]="signUpForm.invalid"
+                color="accent"
+              >
+                SIGN UP
+              </button>
+            </div>
+            <ng-template #loader>
+              <app-loader-box></app-loader-box>
+            </ng-template>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div
+      class="
+        w-full
+        h-56
+        lg:flex
+        justify-center
+        items-center
+        header-box
+        bg-center bg-cover
+        lg:w-1/2 lg:h-full lg:items-start lg:justify-end lg:pr-10
+        hidden
+      "
+    >
+      <img
+        class="
+          h-16
+          lg:h-10 lg:mt-8 lg:ml-8
+          animate__animated animate__fadeIn animate__delay-1s
+        "
+        src="assets/images/logo.svg"
+        alt="Max sold logo"
+      />
+    </div>
+  </div>
+</div>

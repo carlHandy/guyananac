@@ -1,0 +1,86 @@
+<div class="block lg:hidden">
+  <div class="inline-flex w-full h-14 mb-6 shadow rounded-md">
+    <div
+      *ngIf="auctionsIds$ | async as ids"
+      [matMenuTriggerFor]="teams"
+      class="
+        h-14
+        w-40
+        pl-4
+        pr-6
+        items-center
+        justify-between
+        border-r border-secondary
+        cursor-pointer
+        bg-white
+        group
+        rounded-l-md
+        inline-flex
+        flex-1
+      "
+    >
+      <ng-container *ngIf="notificationsService.auctionIdFilter$ | async as id">
+        <h3 class="text-md font-medium">{{ id > 0 ? id : "Auction ID" }}</h3>
+      </ng-container>
+      <i
+        class="las la-angle-down group-hover:text-accent"
+        style="font-size: 12px"
+      ></i>
+      <mat-menu #teams="matMenu">
+        <button
+          (click)="auctionIdSelection(-1)"
+          mat-menu-item
+          class="font-medium"
+        >
+          <span class="text-accent mr-2">All</span>
+        </button>
+        <button
+          *ngFor="let id of ids"
+          (click)="auctionIdSelection(id)"
+          mat-menu-item
+          class="font-medium"
+        >
+          <span class="text-accent mr-2">{{ id }}</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <div
+      class="
+        h-14
+        pl-4
+        pr-6
+        items-center
+        rounded-r-md
+        bg-white
+        flex-grow
+        inline-flex
+        flex-1
+      "
+    >
+      <div class="flex">
+        <i
+          style="font-size: 24px"
+          class="
+            las
+            la-search
+            cursor-pointer
+            mr-3
+            -ml-1
+            transform
+            -rotate-90
+            text-grey
+          "
+          matPrefix
+        ></i>
+
+        <input
+          class="bg-secondary-2 text-sm flex-grow"
+          placeholder="Search"
+          [formControl]="searchValue"
+          matInput
+        />
+      </div>
+    </div>
+  </div>
+</div>

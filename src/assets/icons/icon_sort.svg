@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="5px" height="8px" viewBox="0 0 5 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_sort</title>
+    <g id="MaxSold-Screens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-744.000000, -598.000000)" fill="#BABABA" fill-rule="nonzero">
+            <g id="icon_sort" transform="translate(744.000000, 598.000000)">
+                <polygon id="Shape" points="0.534883721 5 0 5.53076923 2.23255814 7.74615385 2.5 8 2.76744186 7.74615385 5 5.53076923 4.46511628 5 2.5 6.95"></polygon>
+                <polygon id="Shape" transform="translate(2.500000, 1.500000) rotate(180.000000) translate(-2.500000, -1.500000) " points="0.534883721 0 9.09494702e-13 0.530769231 2.23255814 2.74615385 2.5 3 2.76744186 2.74615385 5 0.530769231 4.46511628 0 2.5 1.95"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

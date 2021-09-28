@@ -1,0 +1,61 @@
+<div class="flex items-center px-2" *ngIf="seller$ | async as seller">
+  <ng-container
+    *ngIf="totalNotifications$ | async as total; else noNotifications"
+  >
+    <ng-container *ngIf="total > 0">
+      <i
+        class="las la-bell hover:text-accent cursor-pointer"
+        [matBadge]="total <= 9 ? total : '+9'"
+        matBadgeColor="warn"
+        routerLink="notifications"
+      ></i>
+    </ng-container>
+  </ng-container>
+  <ng-template #noNotifications>
+    <i
+      class="las la-bell hover:text-accent cursor-pointer"
+      routerLink="notifications"
+    ></i>
+  </ng-template>
+
+  <div class="flex items-center ml-4 cursor-pointer" routerLink="profile">
+    <ng-container *ngIf="profileImage$ | async as profileImage">
+      <div
+        *ngIf="!profileImage.profilePhotoURI"
+        class="
+          w-10
+          h-10
+          rounded-full
+          bg-accent
+          flex
+          items-center
+          justify-center
+          text-white
+        "
+      >
+        {{ getInitials(seller) }}
+      </div>
+      <img
+        *ngIf="profileImage.profilePhotoURI"
+        class="
+          h-10
+          w-10
+          rounded-full
+          bg-white bg-cover bg-center
+          cursor-pointer
+        "
+        [src]="
+          profileImage.profilePhotoURI
+            ? profileImage.profilePhotoURI
+            : 'assets/images/emptyProfileImage.png'
+        "
+      />
+    </ng-container>
+
+    <div class="ml-2 hidden lg:block">
+      <p class="text-sm font-medium mt-1">
+        {{ seller.firstName }} {{ seller.lastName }}
+      </p>
+    </div>
+  </div>
+</div>

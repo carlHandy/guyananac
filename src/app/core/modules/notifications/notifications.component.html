@@ -1,0 +1,14 @@
+<!-- filters -->
+<section>
+  <div class="flex items-center lg:items-start lg:flex-col justify-between">
+    <h1 class="text-3xl lg:text-5xl mb-4 font-medium">Notifications</h1>
+    <div class="w-full hidden lg:block">
+      <app-notification-filter-bar></app-notification-filter-bar>
+    </div>
+  </div>
+</section>
+<div class="w-full lg:hidden">
+  <app-mobile-filter-bar></app-mobile-filter-bar>
+</div>
+
+<app-notifications-table></app-notifications-table>

@@ -1,0 +1,13 @@
+<mat-card class="mb-5">
+  <div class="flex items-center mb-3" (click)="toggleView()">
+    <div class="flex-grow">
+      <ng-content select="[title]"></ng-content>
+    </div>
+
+    <i class="las la-plus cursor-pointer lg:hidden" *ngIf="!show"></i>
+    <i class="las la-times cursor-pointer lg:hidden" *ngIf="show"></i>
+  </div>
+  <ng-container *ngIf="(show && (isHandset$ | async)) || !(isHandset$ | async)">
+    <ng-content select="[main]"></ng-content>
+  </ng-container>
+</mat-card>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>invitation_auction</title>
+    <defs>
+        <circle id="path-1" cx="22" cy="22" r="22"></circle>
+    </defs>
+    <g id="MaxSold-Screens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons" transform="translate(-257.000000, -335.000000)">
+            <g id="invitation_auction" transform="translate(257.000000, 335.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#D9F7E7" xlink:href="#path-1"></use>
+                <g id="th-list-solid" mask="url(#mask-2)" fill="#569F00" fill-rule="nonzero">
+                    <g transform="translate(11.000000, 12.000000)" id="Shape">
+                        <path d="M0,0 L0,20 L24,20 L24,0 L0,0 Z M2,2 L7,2 L7,6 L2,6 L2,2 Z M9,2 L22,2 L22,6 L9,6 L9,2 Z M2,8 L7,8 L7,12 L2,12 L2,8 Z M9,8 L22,8 L22,12 L9,12 L9,8 Z M2,14 L7,14 L7,18 L2,18 L2,14 Z M9,14 L22,14 L22,18 L9,18 L9,14 Z"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

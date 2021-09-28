@@ -1,0 +1,592 @@
+<!-- auction phases -->
+
+<app-closeable-card *ngIf="auction && auctionPhasesState">
+  <div title class="flex justify-between">
+    <h1 class="font-medium text-3xl mb-3">Auction Progress</h1>
+    <p class="cursor-pointer hidden lg:block">
+      Get updates on the status of your auction here.
+    </p>
+  </div>
+  <div main>
+    <mat-accordion>
+      <!-- Contract submitted -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showContractSubmitted"
+        [disabled]="!auctionPhasesState.enableContractSubmitted"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableContractSubmitted"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">Contract Submitted</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4" *ngIf="auction?.contract; else noContract">
+          Thank you for submitting a contract with MaxSold! We’re excited to
+          work with you!
+          <br /><br />
+          Click the button below to download a copy of your contract.
+        </p>
+        <ng-template #noContract>
+          Contract document(s) are not available at this time.
+        </ng-template>
+        <div class="inline-block" *ngIf="auction?.contract">
+          <button
+            mat-flat-button
+            color="accent"
+            (click)="
+              downloadContract(
+                auction?.contract?.contractId,
+                auction.contract?.contractNum
+              )
+            "
+          >
+            Download Contract {{ auction?.contract?.contractNum }}
+          </button>
+        </div>
+      </mat-expansion-panel>
+      <!-- Build your auction catalog NOT use app content-->
+      <mat-expansion-panel
+        *ngIf="
+          auctionPhasesState.showBuildYourAuctionCatalog &&
+          auctionPhasesState.enableBuildYourActionNotUseApp
+        "
+        [disabled]="!auctionPhasesState.enableBuildYourActionNotUseApp"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableBuildYourActionNotUseApp"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">Build Your Auction Catalog</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          1. Click the button below to access the blank draft of your catalog
+          and begin building it. Check your personal email for login
+          credentials.
+        </p>
+        <div class="inline-block mb-4">
+          <a
+            mat-flat-button
+            color="accent"
+            href="https://max360.maxsold.com/client/login"
+            target="_blank"
+            >Blank Draft</a
+          >
+        </div>
+        <p class="mb-4">
+          2. Your Operations Manager will reach out in the next 5 days to see if
+          you need assistance.
+          <br /><br />
+
+          3. Detailed instructions on how to build and execute your auction are
+          available
+          <a
+            class="cursor-pointer text-accent hover:underline"
+            href="https://go.maxsold.com/seller-managed-welcome-v2.html"
+            target="_blank"
+          >
+            HERE</a
+          >. <br /><br />
+          4. To complete the cataloging process, you must lock your draft and
+          set dates for your auction.
+        </p>
+      </mat-expansion-panel>
+      <!-- Build your auction catalog USE app content-->
+      <mat-expansion-panel
+        *ngIf="
+          auctionPhasesState.showBuildYourAuctionCatalog &&
+          auctionPhasesState.enableBuildYourActionUseApp
+        "
+        [disabled]="!auctionPhasesState.enableBuildYourActionUseApp"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableBuildYourActionUseApp"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">Build Your Auction Catalog</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <p class="mb-4">
+          1. Click the button below to access the seller app and begin building
+          it. Check your personal email for login credentials.
+        </p>
+        <div class="inline-block mb-4">
+          <a
+            mat-flat-button
+            color="accent"
+            href="https://maxsold.com/sellerapp"
+            target="_blank"
+            >Seller App</a
+          >
+        </div>
+        <p class="mb-4">
+          2. Your Operations Manager will reach out in the next 5 days to see if
+          you need assistance. Detailed instructions on how to build and execute
+          your auction are available
+          <a
+            class="cursor-pointer text-accent hover:underline"
+            href="https://go.maxsold.com/seller-managed-welcome-v2.html"
+            target="_blank"
+          >
+            HERE</a
+          >.<br /><br />
+          3. To complete the cataloging process, you must lock your draft and
+          set dates for your auction.
+        </p>
+      </mat-expansion-panel>
+      <!-- Preparing & Scheduling for Auction Team -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showPreparingAndScheduling"
+        [disabled]="!auctionPhasesState.enablePreparing"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enablePreparing"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">
+                Preparing & Scheduling for the Cataloging Day
+              </div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p></p>
+        <p class="mb-4">
+          A MaxSold auction team has been scheduled for the cataloging day. Look
+          above for your cataloging dates and prepare for their arrival by:
+          <br /><br />
+          1. Marking items not for sale - be sure they are clearly marked (if
+          large) or moved to a secure location if smaller. <br />
+          <br />
+          2. Clear personal items out of anything that is for sale - i.e. desks,
+          dressers, file cabinets, bookshelves etc. <br />
+          <br />
+          3. Make sure all boxed items are unpacked, items unwrapped (if high
+          value like china) or at least easily accessible (i.e. holiday
+          decorations - don't unwrap all of them). If we have to unpack boxes to
+          see what it is you want us to catalog - that's setup and it's extra.
+          <br />
+          <br />
+          4. Group like items with like items -- pairs of lamps in the same
+          room, complete china set, etc. <br />
+          <br />
+          5. Our team will not catalog any items that are hardwired into
+          electricity or other utilities (chandeliers, washers, gas dryers,
+          etc). If you wish to include these items they MUST be disconnected at
+          the time of cataloging. <br />
+          <br />
+          6. If you have things in kitchen drawers, cabinets, shelves, etc -
+          that's okay. We can open it and take the images. <br />
+          <br />
+          As teams are now scheduled and committed for your dates, a $150
+          rescheduling fee will be applied if less than 3 business day's notice
+          is provided for scheduling changes. <br />
+          <br />
+          If you rather see what setup looks like, here is a
+          <a
+            class="cursor-pointer text-accent hover:underline"
+            href="https://maxsold.com/setupguide"
+            target="_blank"
+          >
+            resource</a
+          >.
+        </p>
+      </mat-expansion-panel>
+      <!-- Review catalog and set dates -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showReviewCatalog"
+        [disabled]="!auctionPhasesState.enableReviewCatalogAndSetDate"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableReviewCatalogAndSetDate"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">
+                Review Catalog and Discuss Dates
+              </div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          Click the button below to review the draft catalog. <br /><br />
+          - Edits will need to be completed by 10:00 AM of your auction opening
+          day. <br />
+          <br />
+          - Lot removal requests will result in a lot being removed in its
+          entirety as we can not remove partial lots without risk of refunds.
+          <br />
+          <br />
+          - Your comments are saved automatically, and will be incorporated by
+          our editors prior to launching your auction. <br />
+          <br />
+          - Only objective factual comments will be accepted (signatures, size,
+          chips, cracks, etc). We can not add subjective terms (beautiful, one
+          of a kind, amazing, best, etc.) as we cannot substantiate them. <br />
+          <br />
+          Your Operations Manager will be in touch soon to discuss dates.
+        </p>
+        <div class="inline-block mb-4">
+          <a
+            mat-flat-button
+            color="accent"
+            href="https://max360.maxsold.com/client/login"
+            target="_blank"
+            >Review Draft</a
+          >
+        </div>
+      </mat-expansion-panel>
+      <!-- set auction dates -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showSetAuctionDates"
+        [disabled]="!auctionPhasesState.enableSetDates"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableSetDates"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">Set Auction Dates</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          Your auction dates have been confirmed - check the top of this page to
+          see the confirmed dates.
+        </p>
+      </mat-expansion-panel>
+      <!-- Auction open -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showAuctionOpen"
+        [disabled]="!auctionPhasesState.enableAuctionOpen"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableAuctionOpen"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">Auction Open</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          Your auction has opened. You can track its progress at the bottom of
+          this page. <br />
+          <br />
+          <strong>NOTE:</strong> Typically, 40%-60% OF ALL BIDS are placed on
+          the LAST DAY, in the last few hours of the auction (with a good
+          proportion of those happening in the last few minutes). If you are
+          reviewing bids prior to this, you are likely seeing less than half the
+          result. <br />
+          <br />
+          Access your auction directly here, and feel free to share this link
+          with friends and family:
+        </p>
+        <div class="inline-block mb-4">
+          <a
+            mat-flat-button
+            color="accent"
+            [href]="
+              'https://maxsold.maxsold.com/auction/' + auction.am_auction_id
+            "
+            target="_blank"
+            >View Auction</a
+          >
+        </div>
+      </mat-expansion-panel>
+      <!-- Auction closed and pickup pending -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showAuctionClosedPickupPending"
+        [disabled]="!auctionPhasesState.enableAuctionClosedPickupPending"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="
+                    auctionPhasesState.enableAuctionClosedPickupPending
+                  "
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">Auction Closed</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          Your auction has closed. You can review the results on this page, in
+          the Auction Metric section. You will receive a full report within 14
+          business days when the numbers are finalized along with the payment.
+        </p>
+      </mat-expansion-panel>
+      <!-- Pickup scheduled for -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showPickupScheduledFor"
+        [disabled]="!auctionPhasesState.enablePickupScheduled"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enablePickupScheduled"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">
+                Pickup Scheduled for {{ auction.pickupDate | auctionDateShort }}
+              </div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          Your pickup event is approaching! Please click the button below to
+          view buyer’s invoices (note that the information on these invoices is
+          updated automatically as we collect payments from buyers).
+        </p>
+        <div class="inline-block mb-4">
+          <button
+            mat-flat-button
+            color="accent"
+            [routerLink]="['/auctions', 'invoice-report', auction.auctionId]"
+          >
+            View Invoices
+          </button>
+        </div>
+        <p class="mb-4">
+          <strong
+            >REMINDER: Masks are to be worn at all times at pickup by both
+            sellers and buyers.</strong
+          >
+          <br />
+          <br />
+          Before pickup: <br />
+          <br />
+          1. Ensure all valuables and personal effects have been segregated from
+          the items to be picked up to avoid any confusion. <br />
+          <br />
+          2. Please ensure all ice, snow, vehicles, and other obstacles are
+          removed from access routes and are made safe prior to the arrival of
+          buyers/team to prevent access issues and/or injury. <br />
+          <br />
+          3. Put up signage around the property to direct traffic prior to the
+          pickup event. Print the sign at this
+          <a
+            class="cursor-pointer text-accent hover:underline"
+            href="https://tinyurl.com/maxsoldpickupsign"
+            target="_blank"
+          >
+            link</a
+          >
+          <br />
+          <br />
+          At pickup: <br />
+          <br />
+          1. Ensure buyers have collected all their purchased lots and inspected
+          them before leaving the site. Keep track of refund requests and other
+          feedback for your pickup report. <br />
+          <br />
+          2. Check that invoices have been paid before releasing the lots to the
+          buyer. If the invoice is over $300, check the buyer’s ID.
+        </p>
+      </mat-expansion-panel>
+      <!-- Pickup scheduled for  MAXSOLD -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showPickupScheduledForMaxSold"
+        [disabled]="!auctionPhasesState.enableScheduleForMaxSold"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableScheduleForMaxSold"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">
+                Pickup Scheduled for {{ auction.pickupDate | auctionDateShort }}
+              </div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          Your pickup event is approaching! <br />
+          <br />
+          <strong
+            >REMINDER: Masks are to be worn at all times at pickup by the
+            MaxSold team, sellers and buyers.</strong
+          >
+          <br />
+          <br />
+          Before the MaxSold team arrives: <br />
+          <br />
+          1. Ensure all valuables and personal effects have been segregated from
+          the items to be picked up to avoid any confusion. <br />
+          <br />
+          2. Please ensure all ice, snow, vehicles, and other obstacles are
+          removed from access routes and are made safe prior to the arrival of
+          buyers/team to prevent access issues and/or injury. <br />
+          <br />
+          3. Check your important notifications in the Seller Portal for the
+          MaxSold team’s exact arrival time on pickup day.
+        </p>
+        <!-- <div class="inline-block mb-4">
+          <button
+            mat-flat-button
+            color="accent"
+            [routerLink]="['/auctions', 'invoice-report', auction.auctionId]"
+          >
+            View Invoices {{ auction?.contract.contractNum }}
+          </button>
+        </div>
+        <p class="mb-4">
+          <strong
+            >REMINDER: Masks are to be worn at all times at pickup by both
+            sellers and buyers.</strong
+          >
+          <br />
+          <br />
+          Before pickup: <br />
+          <br />
+          1. Ensure all valuables and personal effects have been segregated from
+          the items to be picked up to avoid any confusion. <br />
+          <br />
+          2. Please ensure all ice, snow, vehicles, and other obstacles are
+          removed from access routes and are made safe prior to the arrival of
+          buyers/team to prevent access issues and/or injury. <br />
+          <br />
+          3. Put up signage around the property to direct traffic prior to the
+          pickup event. Print the sign at this
+          <a
+            class="cursor-pointer text-accent hover:underline"
+            href="https://tinyurl.com/maxsoldpickupsign"
+            target="_blank"
+          >
+            link</a
+          >
+          <br />
+          <br />
+          At pickup: <br />
+          <br />
+          1. Ensure buyers have collected all their purchased lots and inspected
+          them before leaving the site. Keep track of refund requests and other
+          feedback for your pickup report. <br />
+          <br />
+          2. Check that invoices have been paid before releasing the lots to the
+          buyer. If the invoice is over $300, check the buyer’s ID.
+        </p> -->
+      </mat-expansion-panel>
+      <!-- Submit Pickup Feedback Form -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showSubmitPickupFeedback"
+        [disabled]="!auctionPhasesState.enableSubmitPickupFeedback"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableSubmitPickupFeedback"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">Submit Pickup Feedback Form</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          Have you completed your pickup? Please ensure you submit a pickup
+          report so that proceeds are paid on time!
+        </p>
+        <div class="inline-block mb-4">
+          <a
+            mat-flat-button
+            color="accent"
+            [href]="buildPickupFeedbackForm()"
+            target="_blank"
+            >View Pickup Report</a
+          >
+        </div>
+        <p class="mb-4">
+          IMPORTANT: Without your completed report, we will assume that you are
+          100% in agreement with any refund requests or feedback sent by the
+          buyers. Failure to send in a report means auction proceeds could be
+          delayed.
+        </p>
+      </mat-expansion-panel>
+      <!-- Settlement report -->
+      <mat-expansion-panel
+        *ngIf="auctionPhasesState.showSettlementReport"
+        [disabled]="!auctionPhasesState.enableSettlementReport"
+        class="bg-light-blue-2"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="flex items-center">
+              <div class="mr-2">
+                <mat-checkbox
+                  disabled
+                  [checked]="auctionPhasesState.enableSettlementReport"
+                ></mat-checkbox>
+              </div>
+              <div class="font-medium -mb-0.5">Settlement Report</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="mb-4">
+          The settlement report will be sent to your personal inbox (not seller
+          portal notifications) with the financial details of your auction.
+        </p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</app-closeable-card>

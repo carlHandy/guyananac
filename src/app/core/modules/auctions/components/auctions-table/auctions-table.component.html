@@ -1,0 +1,37 @@
+<!-- seller auctions -->
+<ng-container *ngIf="shownAuctions$ | async as auctions; else loader">
+  <div class="flex items-center lg:items-start lg:flex-col justify-between">
+    <h1 class="text-4xl lg:text-5xl mb-4 font-medium">Auctions</h1>
+    <div class="w-full hidden lg:block">
+      <app-auctions-filter-bar></app-auctions-filter-bar>
+    </div>
+  </div>
+
+  <div class="w-full lg:hidden">
+    <app-auction-mobile-filter-bar></app-auction-mobile-filter-bar>
+  </div>
+
+  <ng-container *ngFor="let auction of auctions">
+    <app-auction-card
+      [enableTitleNavigation]="true"
+      [showNotifications]="true"
+      [auction]="auction"
+    ></app-auction-card>
+  </ng-container>
+  <div class="flex justify-center" *ngIf="empty && auctions.length > 0">
+    <img class="h-6" src="assets/images/logo.svg" alt="Max sold logo" />
+  </div>
+
+  <div *ngIf="originalAuctionList | async as list">
+    <p class="text-center" *ngIf="list.length <= 0">
+      Currently, no auctions are linked to your profile. Contact the MaxSold
+      Sales team if you believe this to be incorrect.
+    </p>
+    <div *ngIf="list.length > 0">
+      <p class="text-center" *ngIf="auctions.length <= 0">Empty auction list</p>
+    </div>
+  </div>
+</ng-container>
+<ng-template #loader>
+  <app-loader-box></app-loader-box>
+</ng-template>

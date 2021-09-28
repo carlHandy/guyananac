@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "mx-seller-portal"
+  },
+  "targets": {
+    "mx-seller-portal": {
+      "hosting": {
+        "mx-seller-portal": [
+          "mx-seller-portal"
+        ]
+      }
+    }
+  }
+}

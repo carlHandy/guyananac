@@ -1,0 +1,132 @@
+<div class="flex w-full h-14 mb-6 shadow rounded-md">
+  <!-- Phase filter -->
+  <div
+    [matMenuTriggerFor]="phases"
+    class="
+      h-14
+      flex-1
+      pl-4
+      pr-6
+      items-center
+      justify-between
+      border-r border-secondary
+      cursor-pointer
+      bg-white
+      group
+      inline-flex
+      rounded-l-md
+    "
+  >
+    <ng-container
+      *ngIf="auctionFilters.phaseFilter$ | async as phase; else noPhase"
+    >
+      <h3 class="text-md font-medium">
+        {{ phase.label }}
+      </h3>
+    </ng-container>
+    <ng-template #noPhase>
+      <h3 class="text-md font-medium">Phase</h3>
+    </ng-template>
+    <i
+      class="las la-angle-down group-hover:text-accent"
+      style="font-size: 22px"
+    ></i>
+  </div>
+  <mat-menu #phases="matMenu" class="w-48">
+    <button mat-menu-item (click)="phaseSelection(null)">
+      <div class="flex items-center">
+        <div class="w-5 h-5 rounded bg-secundary mr-2"></div>
+        <p class="font-medium text-md">All</p>
+      </div>
+    </button>
+    <button
+      mat-menu-item
+      *ngFor="let phase of filterPhases"
+      (click)="phaseSelection(phase)"
+    >
+      <div class="flex items-center">
+        <div class="w-5 h-5 rounded mr-2" [ngClass]="phase.color"></div>
+        <p class="font-medium text-md">{{ phase.label }}</p>
+      </div>
+    </button>
+  </mat-menu>
+
+  <!-- years -->
+  <div
+    [matMenuTriggerFor]="years"
+    class="
+      h-14
+      flex-1
+      pl-4
+      pr-6
+      items-center
+      justify-between
+      border-r border-secondary
+      cursor-pointer
+      bg-white
+      group
+      inline-flex
+      rounded-r-md
+    "
+  >
+    <ng-container *ngIf="auctionFilters.yearFilter$ | async as year">
+      <h3 class="text-md font-medium">{{ year > 0 ? year : "Year" }}</h3>
+    </ng-container>
+    <i
+      class="las la-angle-down group-hover:text-accent"
+      style="font-size: 22px"
+    ></i>
+  </div>
+  <mat-menu #years="matMenu">
+    <button mat-menu-item (click)="yearSelection(-1)">
+      <span>All</span>
+    </button>
+    <button
+      mat-menu-item
+      *ngFor="let year of filterYears"
+      (click)="yearSelection(year)"
+    >
+      <span>{{ year }}</span>
+    </button>
+  </mat-menu>
+</div>
+
+<div class="inline-flex w-full h-14 mb-6 shadow rounded-md">
+  <div
+    class="
+      h-14
+      pl-4
+      pr-6
+      items-center
+      rounded-md
+      bg-white
+      flex-grow
+      inline-flex
+      flex-1
+    "
+  >
+    <div class="flex">
+      <i
+        style="font-size: 24px"
+        class="
+          las
+          la-search
+          cursor-pointer
+          mr-3
+          -ml-1
+          transform
+          -rotate-90
+          text-grey
+        "
+        matPrefix
+      ></i>
+
+      <input
+        class="bg-secondary-2 text-sm flex-grow"
+        placeholder="Search"
+        [formControl]="searchValue"
+        matInput
+      />
+    </div>
+  </div>
+</div>

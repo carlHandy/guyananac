@@ -1,0 +1,28 @@
+<div class="search-button pl-2">
+  <mat-form-field
+    class="transition-all rounded-md w-full bg-secondary"
+    appearance="fill"
+  >
+    <i
+      style="font-size: 24px"
+      class="
+        las
+        la-search
+        cursor-pointer
+        -ml-1
+        mr-3
+        transform
+        -rotate-90
+        text-grey
+      "
+      matPrefix
+    ></i>
+
+    <input
+      placeholder="Search"
+      class="bg-secondary-2 text-sm"
+      matInput
+      (keyup)="onSearch($event)"
+    />
+  </mat-form-field>
+</div>

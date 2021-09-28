@@ -1,0 +1,108 @@
+<div
+  *ngIf="invoiceDetails"
+  class="w-full rounded-md text-white px-2 mb-1.5 py-0.5 text-sm uppercase"
+  [ngClass]="{
+    'bg-warn': invoiceDetails.invoiceBalance > 0,
+    'bg-accent': invoiceDetails.invoiceBalance === 0
+  }"
+>
+  INVOICE # {{ invoiceDetails.invoiceId }}
+  <span *ngIf="invoiceDetails.invoiceBalance > 0">
+    unpaid invoice amount:
+    <span>{{ invoiceDetails.invoiceBalance | currency }}</span>
+  </span>
+</div>
+<div *ngIf="items.length > 0">
+  <div
+    class="flex items-stretch mb-1.5 w-full"
+    *ngFor="let invoiceItem of items"
+  >
+    <div class="w-14 pr-1.5">
+      <div class="h-full w-full bg-light-blue-2 p-2 rounded-md font-bold">
+        {{ invoiceItem.itemLotNum }}
+      </div>
+    </div>
+    <div class="flex-grow">
+      <div class="grid grid-cols-12 flex-grow gap-1.5 rounded-md">
+        <div
+          class="
+            col-span-6
+            lg:col-span-4
+            bg-light-blue-2
+            p-2
+            rounded-md
+            font-bold
+          "
+        >
+          {{ invoiceItem.itemTitle }}
+        </div>
+        <div
+          class="
+            col-span-6
+            lg:col-span-1
+            bg-light-blue-2
+            p-2
+            rounded-md
+            font-bold
+          "
+        >
+          {{ invoiceItem.itemAmt | currency }}
+        </div>
+        <div
+          class="
+            col-span-6
+            lg:col-span-2
+            bg-light-blue-2
+            p-2
+            rounded-md
+            font-bold
+          "
+        >
+          {{ invoiceDetails.firstName }}
+        </div>
+        <div
+          class="
+            col-span-6
+            lg:col-span-2
+            bg-light-blue-2
+            p-2
+            rounded-md
+            font-bold
+          "
+        >
+          {{ invoiceDetails.lastName }}
+        </div>
+        <div
+          class="
+            col-span-12
+            lg:col-span-3
+            bg-light-blue-2
+            p-2
+            rounded-md
+            flex
+            justify-between
+            items-start
+            pr-4
+          "
+        >
+          {{
+            invoiceDetails.pickupStarttime
+              | auctionPickUpDate: invoiceDetails.pickupEndtime
+          }}
+
+          <mat-checkbox
+            [disabled]="invoiceItem.pickedUp"
+            (change)="
+              setPickedUp($event.checked, invoiceItem.lineItemId, invoiceItem)
+            "
+            [checked]="invoiceItem.pickedUp"
+          ></mat-checkbox>
+        </div>
+      </div>
+      <div
+        [innerHTML]="invoiceItem.itemDesc"
+        class="bg-light-blue-2 p-2 rounded-md mt-1.5 font-medium"
+      ></div>
+    </div>
+  </div>
+</div>

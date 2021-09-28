@@ -1,0 +1,91 @@
+version: '2.1'
+
+orbs:
+  slack: circleci/slack@4.4.2
+
+references:
+  only-release-branches: &only-dev-branches
+    context:
+      - slack_environment
+    filters:
+      branches:
+        only: development
+  only-main-branch: &only-main-branch
+    context:
+      - slack_environment
+    filters:
+      branches:
+        only: main
+  only-staging-branches: &only-staging-branches
+    context:
+      - slack_environment
+    filters:
+      branches:
+        only: staging
+
+jobs:
+     deployToDevFirebase:
+          # parameters:
+          #   dev_distribution_id:
+          #     type: string
+          #     default: "E2SJNQXBCRGDXJ"
+          #   paths:
+          #     type: string
+          #     default: "/*"
+          docker:
+            - image: node:latest
+          steps:
+            - checkout
+            - run: echo "build steps"
+            - run: npm install -g @angular/cli@latest
+            - run: npm install
+            - run: npm run build
+            - run: cd functions
+            - run: npm install
+            # - aws-s3/sync:
+            #     from: dist/maxsold/
+            #     to: s3://seller-app-staging-portal.maxsold.com
+            #     arguments: --delete
+            # - run: aws cloudfront create-invalidation --distribution-id=<< parameters.dev_distribution_id >> --paths=<< parameters.paths >>
+            - slack/notify:
+                event: fail
+                mentions: '@sandeepyekkali'
+                template: basic_fail_1
+            - slack/notify:
+                event: pass
+                template: success_tagged_deploy_1
+    #  deployToProdS3:
+    #       parameters:
+    #         prod_distribution_id:
+    #           type: string
+    #           default: "E1BMV8JF7XFRD7"
+    #         paths:
+    #           type: string
+    #           default: "/*"
+    #       docker:
+    #         - image: node:latest
+    #       steps:
+    #         - checkout
+    #         - run: echo "build steps"
+    #         - run: npm install -g @angular/cli@latest
+    #         - run: npm install
+    #         - run: ng build --prod
+    #         - aws-s3/sync:
+    #             from: dist/maxsold/
+    #             to: s3://seller-app.maxsold.com
+    #             arguments: --delete
+    #         - run: aws cloudfront create-invalidation --distribution-id=<< parameters.prod_distribution_id >> --paths=<< parameters.paths >>
+    #         - slack/notify:
+    #             event: fail
+    #             mentions: '@sandeepyekkali'
+    #             template: basic_fail_1
+    #         - slack/notify:
+    #             event: pass
+    #             template: success_tagged_deploy_1
+workflows:
+  seller-portal-client-uat:
+    jobs:
+      - deployToDevFirebase: *only-dev-branches
+  # seller-app-prod-FE:
+  #   jobs:
+  #     - deployToProdS3: *only-main-branch

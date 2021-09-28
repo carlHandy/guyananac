@@ -1,0 +1,40 @@
+.preview-image {
+  max-width: 200px;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+  margin: 1rem auto;
+}
+
+.content {
+  min-width: 200px;
+  max-width: 500px;
+}
+
+.progress-container {
+  margin: 1rem auto;
+}
+
+.input-file {
+  display: none !important;
+}
+
+.input-file + label {
+  font-weight: 700;
+  display: inline-block;
+  padding: 8px;
+  border-radius: 9999px;
+  height: 48px;
+  width: 180px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  text-align: center;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-top: 16px;
+}
+
+.input-file + label {
+  cursor: pointer; /* "hand" cursor */
+}

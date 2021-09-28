@@ -1,0 +1,94 @@
+<mat-dialog-content>
+  <div class="content">
+    <header class="mb-4">
+      <div class="w-full inline-flex justify-end">
+        <i
+          class="las la-times hover:text-accent cursor-pointer"
+          (click)="dialogRef.close()"
+        ></i>
+      </div>
+      <div class="w-full inline-flex justify-start mb-5">
+        <i class="las la-user-circle text-accent" style="font-size: 64px"></i>
+      </div>
+      <h1 class="font-medium text-3xl mb-2">Edit Profile Avatar</h1>
+      <p class="text-xl">
+        Optimal dimensions are 500 x 500px. Images can be a maximum of 3MB.
+      </p>
+    </header>
+
+    <div>
+      <p *ngIf="errorMessage" class="text-warn">{{errorMessage}}</p>
+
+      <app-loader-box *ngIf="updating"></app-loader-box>
+
+      <img
+        *ngIf="imagePreview && !updating"
+        class="preview-image"
+        [src]="imagePreview"
+        alt="Commerce image preview"
+      />
+      <ng-container
+        class="progress-container my-4"
+        *ngIf="progress$ | async as progress"
+      >
+        <mat-progress-bar
+          *ngIf="updating"
+          class="mt-5"
+          mode="determinate"
+          [value]="progress"
+        ></mat-progress-bar>
+        <div
+          class="my-4"
+          *ngIf="!completed"
+          fxFlex="row"
+          fxLayoutAlign="center center"
+        ></div>
+      </ng-container>
+      <p class="text-center my-4" *ngIf="completed">Completed!</p>
+
+      <div class="flex justify-center my-4 flex-wrap">
+        <div class="mr-2 mb-2">
+          <button
+            (click)="dialogRef.close()"
+            mat-flat-button
+            color="primary"
+            class="my-4 border-button"
+          >
+            CLOSE
+          </button>
+        </div>
+        <div class="mr-2 mb-2">
+          <button
+            (click)="removeUserImage()"
+            mat-flat-button
+            color="primary"
+            class="my-4 border-button"
+          >
+            REMOVE
+          </button>
+        </div>
+        <div class="flex justify-center" *ngIf="!updating && !image">
+          <input
+            type="file"
+            accept="image/*"
+            name="File"
+            id="file"
+            class="input-file"
+            (change)="onImageSelection($event)"
+          />
+          <label for="file">Select Image</label>
+        </div>
+        <div *ngIf="!updating && image">
+          <button
+            (click)="update()"
+            [disabled]="!image || completed"
+            mat-flat-button
+            color="accent"
+          >
+            UPLOAD IMAGE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

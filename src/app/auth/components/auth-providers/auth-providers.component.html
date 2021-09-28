@@ -1,0 +1,59 @@
+<div class="flex flex-wrap justify-evenly" *ngIf="!requesting; else loader">
+  <button
+    class="
+      w-full
+      h-12
+      rounded-full
+      shadow
+      mx-1
+      font-medium
+      text-xs
+      uppercase
+      flex
+      justify-left
+      items-center
+      pl-14
+      bg-white
+      border border-light-grey
+    "
+    (click)="singInGoogle()"
+  >
+    <img
+      class="w-6 mr-4"
+      src="assets/icons/social-login_google.png"
+      alt="Google Icon"
+    />
+    Continue with Google
+  </button>
+  <button
+    class="
+      w-full
+      h-12
+      rounded-full
+      shadow
+      mx-1
+      font-medium
+      text-xs
+      uppercase
+      flex
+      justify-left
+      items-center
+      pl-14
+      border border-light-grey
+      text-white
+      mt-3
+    "
+    style="background-color: #4a6aaf"
+    (click)="singInFacebook()"
+  >
+    <img
+      class="w-6 mr-4"
+      src="assets/icons/social-login-facebook.svg"
+      alt="Google Icon"
+    />
+    Continue with Facebook
+  </button>
+</div>
+<ng-template #loader>
+  <app-loader-box></app-loader-box>
+</ng-template>

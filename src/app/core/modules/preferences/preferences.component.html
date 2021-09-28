@@ -1,0 +1,45 @@
+<h1 class="text-5xl mb-6 font-medium">Preferences</h1>
+<mat-card *ngIf="notificationPreferences$ | async as prefs">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-medium">Email Notifications</h1>
+    <p>Select the type of notifications you’d like to receive here.</p>
+  </div>
+
+  <div class="bg-light-blue-2 rounded-lg p-4 h-full mb-4">
+    <div class="flex">
+      <div class="mr-4">
+        <mat-checkbox
+          (change)="onChange($event.checked, 'important')"
+          [checked]="prefs.important"
+        ></mat-checkbox>
+      </div>
+      <div class="flex-grow">
+        <h2 class="font-bold text-xl mb-2">Important:</h2>
+        <p>
+          These notifications require review/action from you before the auction
+          process can continue. Missing important notifications could result in
+          a delayed auction. We strongly recommend that you do not unsubscribe
+          from these notifications.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="bg-light-blue-2 rounded-lg p-4 h-full">
+    <div class="flex">
+      <div class="mr-4">
+        <mat-checkbox
+          (change)="onChange($event.checked, 'informational')"
+          [checked]="prefs.info"
+        ></mat-checkbox>
+      </div>
+      <div class="flex-grow">
+        <h2 class="font-bold text-xl mb-2">Informational:</h2>
+        <p>
+          These notifications provide helpful information about the status of
+          your auction, but missing them will not cause any delays to your
+          auction.
+        </p>
+      </div>
+    </div>
+  </div>
+</mat-card>

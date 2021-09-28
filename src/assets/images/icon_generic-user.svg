@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="70px" viewBox="0 0 70 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_generic-user</title>
+    <defs>
+        <ellipse id="path-1" cx="34.999125" cy="35" rx="34.999125" ry="35"></ellipse>
+    </defs>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Admin-P2-/-32-Icons" transform="translate(-201.000000, -745.000000)">
+            <g id="icon_generic-user" transform="translate(201.000000, 745.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Photo" fill="#E4F4F7" xlink:href="#path-1"></use>
+                <path d="M35,15 C28.0601558,15 22.4,20.7173291 22.4,27.7272727 C22.4,32.1093745 24.6148442,36.00142 27.96875,38.2954545 C21.5492192,41.0795455 17,47.5142055 17,55 L20.6,55 C20.6,46.9460236 27.0265634,40.4545455 35,40.4545455 C42.9734384,40.4545455 49.4,46.9460236 49.4,55 L53,55 C53,47.5142055 48.4507808,41.0795455 42.03125,38.2954545 C45.3851558,36.00142 47.6,32.1093745 47.6,27.7272727 C47.6,20.7173291 41.9398442,15 35,15 Z M35,18.6363636 C39.9921884,18.6363636 44,22.68466 44,27.7272727 C44,32.7698873 39.9921884,36.8181818 35,36.8181818 C30.0078134,36.8181818 26,32.7698873 26,27.7272727 C26,22.68466 30.0078134,18.6363636 35,18.6363636 Z" id="Shape" fill="#0094B1" fill-rule="nonzero" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

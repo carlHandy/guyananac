@@ -1,0 +1,17 @@
+<div class="block">
+  <mat-card style="padding: 0px !important">
+    <div class="flex items-start mb-4 pt-4 px-4">
+      <img class="mr-4" src="assets/icons/sell_thru_rate.svg" alt="sell" />
+      <div>
+        <h3 class="text-accent font-medium">Sell-thru Rate</h3>
+        <h1 class="text-black text-5xl font-medium">{{ lastInfo }}%</h1>
+        <h5 class="text-sm text-grey">{{ timeDiff }}</h5>
+      </div>
+    </div>
+    <app-auction-line-chart
+      [xAxisAuction]="xAxisData"
+      [yAxisAuction]="yAxisData"
+      color="#FF9770"
+    ></app-auction-line-chart>
+  </mat-card>
+</div>

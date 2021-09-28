@@ -1,0 +1,63 @@
+<!-- notifications  -->
+<section *ngIf="notifications$ | async as notifications">
+  <mat-card>
+    <h1 class="text-3xl mb-6 font-medium">
+      {{ notifications.length }} Notifications
+      <span class="text-sm text-accent" *ngIf="totalUnread$ | async as total"
+        >{{ total }} unread</span
+      >
+    </h1>
+
+    <!-- filters -->
+    <div
+      class="
+        hidden
+        lg:flex
+        mb-2
+        uppercase
+        text-grey text-xs
+        font-semibold
+        mx-2
+        mr-8
+      "
+    >
+      <div class="flex-shrink-0 mr-3">
+        <div class="ml-2.5 w-3 h-3 rounded-full bg-grey"></div>
+      </div>
+      <div class="flex-grow">
+        <div class="grid grid-cols-12 flex-grow gap-1.5 rounded-md">
+          <div class="col-span-2 cursor-pointer" (click)="setSorting('date')">
+            Date <app-sort-arrow></app-sort-arrow>
+          </div>
+          <div
+            class="col-span-2 cursor-pointer"
+            (click)="setSorting('auction')"
+          >
+            Auction <app-sort-arrow></app-sort-arrow>
+          </div>
+          <div
+            class="col-span-6 cursor-pointer"
+            (click)="setSorting('subject')"
+          >
+            Subject <app-sort-arrow></app-sort-arrow>
+          </div>
+          <div class="col-span-2 cursor-pointer" (click)="setSorting('type')">
+            Type <app-sort-arrow></app-sort-arrow>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-accordion>
+      <ng-container
+        *ngFor="let noty of notifications; let i = index; trackBy: identify"
+      >
+        <app-notification-item
+          (wasSelected)="markAsActive(noty.notificationId)"
+          [open]="activeNotification === noty.notificationId"
+          [notification]="noty"
+        ></app-notification-item>
+      </ng-container>
+    </mat-accordion>
+    <p class="text-center" *ngIf="notifications.length <= 0">Empty results</p>
+  </mat-card>
+</section>

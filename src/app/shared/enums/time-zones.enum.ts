@@ -1,0 +1,16 @@
+export enum TimeZonesEnum {
+  AtlanticDaylightTime = 'Atlantic Daylight Time',
+  AlaskaDaylightTime = 'Alaska Daylight Time',
+  AlaskaStandardTime = 'Alaska Standard Time',
+  AtlanticStandardTime = 'Atlantic Standard Time',
+  CentralDaylightTime = 'Central Daylight Time',
+  CentralStandardTime = 'Central Standard Time',
+  EasternDaylightTime = 'Eastern Daylight Time',
+  EasternStandardTime = 'Eastern Standard Time',
+  HawaiiAleutianDaylight = 'Hawaii-Aleutian Daylight',
+  HawaiiAleutianStandard = 'Hawaii-Aleutian Standard ',
+  MountainDaylightTime = 'Mountain Daylight Time',
+  MountainStandardTime = 'Mountain Standard Time',
+  PacificDaylightTime = 'Pacific Daylight Time',
+  PacificStandardTime = 'Pacific Standard Time',
+}
