@@ -9,7 +9,7 @@ references:
       - slack_environment
     filters:
       branches:
-        only: development
+        only: main
   only-main-branch: &only-main-branch
     context:
       - slack_environment
@@ -38,15 +38,13 @@ jobs:
             - checkout
             - run: echo "build steps"
             - run: npm install -g @angular/cli@latest
+            - run: chmod +x sedconfig_uat.sh
+            - run: ./sedconfig_uat.sh
             - run: npm install
             - run: npm run build
             - run: cd functions
             - run: npm install
-            # - aws-s3/sync:
-            #     from: dist/maxsold/
-            #     to: s3://seller-app-staging-portal.maxsold.com
-            #     arguments: --delete
-            # - run: aws cloudfront create-invalidation --distribution-id=<< parameters.dev_distribution_id >> --paths=<< parameters.paths >>
+            - run: firebase projects:list --token "$FIREBASE_TOKEN"
             - slack/notify:
                 event: fail
                 mentions: '@sandeepyekkali'
