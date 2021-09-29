@@ -71,9 +71,9 @@ jobs:
             #     event: pass
             #     template: success_tagged_deploy_1
 workflows:
-  # seller-portal-client-uat:
-  #   jobs:
-  #     - deployToDevFirebase: *only-dev-branches
+  seller-portal-client-uat:
+    jobs:
+      - deployToDevFirebase: *only-dev-branches
   seller-portal-client-prod:
     jobs:
       - deployToProdFirebase: *only-main-branch
