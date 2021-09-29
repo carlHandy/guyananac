@@ -25,13 +25,6 @@ references:
 
 jobs:
      deployToDevFirebase:
-          # parameters:
-          #   dev_distribution_id:
-          #     type: string
-          #     default: "E2SJNQXBCRGDXJ"
-          #   paths:
-          #     type: string
-          #     default: "/*"
           docker:
             - image: node:latest
           steps:
@@ -42,9 +35,12 @@ jobs:
             - run: ./sedconfig_uat.sh
             - run: npm install
             - run: npm run build
+            - run: firebase projects:list --token "$FIREBASE_TOKEN"
+            - run: firebase deploy --only hosting --token "$FIREBASE_TOKEN" --non-interactive
             - run: cd functions
             - run: npm install
-            - run: firebase projects:list --token "$FIREBASE_TOKEN"
+            - run: cd ..
+            - run: firebase deploy --only functions --token "$FIREBASE_TOKEN"
             # - slack/notify:
             #     event: fail
             #     mentions: '@sandeepyekkali'
@@ -52,38 +48,34 @@ jobs:
             # - slack/notify:
             #     event: pass
             #     template: success_tagged_deploy_1
-    #  deployToProdS3:
-    #       parameters:
-    #         prod_distribution_id:
-    #           type: string
-    #           default: "E1BMV8JF7XFRD7"
-    #         paths:
-    #           type: string
-    #           default: "/*"
-    #       docker:
-    #         - image: node:latest
-    #       steps:
-    #         - checkout
-    #         - run: echo "build steps"
-    #         - run: npm install -g @angular/cli@latest
-    #         - run: npm install
-    #         - run: ng build --prod
-    #         - aws-s3/sync:
-    #             from: dist/maxsold/
-    #             to: s3://seller-app.maxsold.com
-    #             arguments: --delete
-    #         - run: aws cloudfront create-invalidation --distribution-id=<< parameters.prod_distribution_id >> --paths=<< parameters.paths >>
-    #         - slack/notify:
-    #             event: fail
-    #             mentions: '@sandeepyekkali'
-    #             template: basic_fail_1
-    #         - slack/notify:
-    #             event: pass
-    #             template: success_tagged_deploy_1
+    deployToProdFirebase:
+          docker:
+            - image: node:latest
+          steps:
+            - checkout
+            - run: echo "build steps"
+            - run: npm install -g @angular/cli@latest firebase-tools
+            - run: chmod +x sedconfig_prod.sh
+            - run: ./sedconfig_prod.sh
+            - run: npm install
+            - run: npm run build
+            - run: firebase projects:list --token "$FIREBASE_TOKEN"
+            - run: firebase deploy --only hosting --token "$FIREBASE_TOKEN" --non-interactive
+            - run: cd functions
+            - run: npm install
+            - run: cd ..
+            - run: firebase deploy --only functions --token "$FIREBASE_TOKEN"
+            # - slack/notify:
+            #     event: fail
+            #     mentions: '@sandeepyekkali'
+            #     template: basic_fail_1
+            # - slack/notify:
+            #     event: pass
+            #     template: success_tagged_deploy_1
 workflows:
   seller-portal-client-uat:
     jobs:
       - deployToDevFirebase: *only-dev-branches
-  # seller-app-prod-FE:
+  # seller-portal-client-prod:
   #   jobs:
-  #     - deployToProdS3: *only-main-branch
+  #     - deployToProdFirebase: *only-main-branch
