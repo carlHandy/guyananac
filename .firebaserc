@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "maxsold-seller-portal-uat"
+    "default": "mx-seller-portal"
   },
   "targets": {
-    "maxsold-seller-portal-uat": {
+    "mx-seller-portal": {
       "hosting": {
-        "maxsold-seller-portal-uat": [
-          "seller-portal-client-uat"
+        "mx-seller-portal": [
+          "mx-seller-portal"
         ]
       }
     }

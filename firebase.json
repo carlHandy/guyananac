@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "seller-portal-client-uat",
+    "site": "mx-seller-portal",
     "public": "dist/seller-portal",
     "ignore": [
       "firebase.json",
@@ -16,22 +16,5 @@
   },
   "functions": {
     "source": "functions"
-  },
-  "emulators": {
-    "auth": {
-      "port": 9091
-    },
-    "functions": {
-      "port": 5002
-    },
-    "firestore": {
-      "port": 8081
-    },
-    "hosting": {
-      "port": 4200
-    },
-    "ui": {
-      "enabled": true
-    }
   }
 }
