@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "mx-seller-portal",
+    "site": "seller-portal-client-uat",
     "public": "dist/seller-portal",
     "ignore": [
       "firebase.json",
