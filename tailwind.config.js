@@ -27,6 +27,7 @@ module.exports = {
 
       white: "var(--color-white)",
       black: "var(--color-black)",
+      accent: "var(--color-accent)",
 
       "auction-upcoming": "var(--color-auction-upcoming)",
       "auction-live": "var(--color-auction-live)",
@@ -60,6 +61,7 @@ module.exports = {
       display: ["group-hover"],
       fontWeight: ["hover"],
       inset: ["group-hover"],
+      textColor: ['responsive', 'hover', 'focus', 'group-hover']
     },
   },
   plugins: [],
