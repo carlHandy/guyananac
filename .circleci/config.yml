@@ -48,7 +48,7 @@ jobs:
             # - slack/notify:
             #     event: pass
             #     template: success_tagged_deploy_1
-    deployToProdFirebase:
+     deployToProdFirebase:
           docker:
             - image: node:latest
           steps:
