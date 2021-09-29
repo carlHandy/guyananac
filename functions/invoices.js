@@ -13,38 +13,38 @@ const db = admin.firestore();
 
 // Template load
 const templateSource = fs.readFileSync(
-  path.join(process.cwd(), "front/template.html"),
+  path.join(process.cwd(), "functions/front/template.html"),
   "utf8"
 );
 const footerSource = fs.readFileSync(
-  path.join(process.cwd(), "front/footer.html"),
+  path.join(process.cwd(), "functions/front/footer.html"),
   "utf8"
 );
 
 // Assets load
 const logo = fs.readFileSync(
-  path.join(process.cwd(), "front/logo.svg"),
+  path.join(process.cwd(), "functions/front/logo.svg"),
   "utf8"
 );
 const icons = {
   unpaidCount: fs.readFileSync(
-    path.join(process.cwd(), "front/icons/comment-dollar-solid.svg"),
+    path.join(process.cwd(), "functions/front/icons/comment-dollar-solid.svg"),
     "utf8"
   ),
   unpaidAmount: fs.readFileSync(
-    path.join(process.cwd(), "front/icons/file-invoice-dollar-solid.svg"),
+    path.join(process.cwd(), "functions/front/icons/file-invoice-dollar-solid.svg"),
     "utf8"
   ),
   important: fs.readFileSync(
-    path.join(process.cwd(), "front/icons/exclamation-triangle-solid.svg"),
+    path.join(process.cwd(), "functions/front/icons/exclamation-triangle-solid.svg"),
     "utf8"
   ),
   checkbox: fs.readFileSync(
-    path.join(process.cwd(), "front/icons/checkbox.svg"),
+    path.join(process.cwd(), "functions/front/icons/checkbox.svg"),
     "utf8"
   ),
   checkboxEmpty: fs.readFileSync(
-    path.join(process.cwd(), "front/icons/checkbox-empty.svg"),
+    path.join(process.cwd(), "functions/front/icons/checkbox-empty.svg"),
     "utf8"
   ),
 };
