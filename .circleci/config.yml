@@ -76,6 +76,6 @@ workflows:
   seller-portal-client-uat:
     jobs:
       - deployToDevFirebase: *only-dev-branches
-  # seller-portal-client-prod:
-  #   jobs:
-  #     - deployToProdFirebase: *only-main-branch
+  seller-portal-client-prod:
+    jobs:
+      - deployToProdFirebase: *only-main-branch
