@@ -62,5 +62,5 @@
     <span class="text-black">{{ notification.am_auction_id }}</span>
     <span>{{ notification.dateSent | auctionDateShort }}</span>
   </div>
-  <p class="pl-0" [innerHtml]="notification.message"></p>
+  <p class="pl-0" style="white-space:pre-wrap" [innerHtml]="notification.message"></p>
 </mat-expansion-panel>
