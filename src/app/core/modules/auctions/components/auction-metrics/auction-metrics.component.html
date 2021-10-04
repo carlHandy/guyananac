@@ -44,7 +44,7 @@
     </div>
     <!-- clickeble cards -->
     <div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 mb-3 gap-4">
-      <div>
+      <div class='has-tooltip'>
         <mat-card
           (click)="state = 'bids'"
           class="
@@ -63,9 +63,11 @@
             </div>
             <img src="assets/icons/bids_icon.svg" alt="bids" />
           </div>
+          
         </mat-card>
+        <span class='tooltip'>Click to view bid stats!</span>
       </div>
-      <div>
+      <div class='has-tooltip'>
         <mat-card
           (click)="state = 'views'"
           class="
@@ -83,8 +85,9 @@
             <img src="assets/icons/views_icon.svg" alt="views" />
           </div>
         </mat-card>
+        <span class='tooltip'>Click to view bidders!</span>
       </div>
-      <div>
+      <div class='has-tooltip'>
         <mat-card
           (click)="state = 'bidCount'"
           class="
@@ -104,8 +107,9 @@
             <img src="assets/icons/bid_count_icon.svg" alt="counts" />
           </div>
         </mat-card>
+        <span class='tooltip'>Click to view bid count!</span>
       </div>
-      <div>
+      <div class='has-tooltip'>
         <mat-card
           (click)="state = 'sellThro'"
           class="
@@ -125,6 +129,7 @@
             <img src="assets/icons/sell_thru_rate.svg" alt="sell" />
           </div>
         </mat-card>
+        <span class='tooltip'>Click to view sell-thru rate!</span>
       </div>
     </div>
     <div [ngSwitch]="state">
