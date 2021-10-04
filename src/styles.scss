@@ -242,3 +242,14 @@ button[mat-raised-button].border-button {
 .mat-expansion-panel-header {
   padding-left: 10px !important;
 }
+
+.tooltip{
+  visibility: hidden;
+  position: absolute;
+}
+.has-tooltip:hover .tooltip {
+  visibility: visible;
+  z-index: 100;
+}
+
+
