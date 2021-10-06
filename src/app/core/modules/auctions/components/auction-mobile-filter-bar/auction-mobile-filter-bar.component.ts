@@ -10,13 +10,25 @@ interface PhaseItem {
   color: string;
 }
 
+interface MonthItem{
+  label: string;
+  value: number;
+}
+
+interface SortOrderItem{
+  value: number;
+  label: string;
+}
+
 @Component({
   selector: 'app-auction-mobile-filter-bar',
   templateUrl: './auction-mobile-filter-bar.component.html',
 })
 export class AuctionMobileFilterBarComponent implements OnInit {
+  filterMonths: MonthItem[] = [];
   filterYears: number[] = [];
   filterPhases: PhaseItem[] = [];
+  filterSort: SortOrderItem[] = [];
   searchValue: FormControl = new FormControl('');
   constructor(public auctionFilters: AuctionFiltersService) {}
 
@@ -78,6 +90,70 @@ export class AuctionMobileFilterBarComponent implements OnInit {
       },
     ];
 
+    const months: MonthItem[] = [
+      {
+        label: "Jan",
+        value: 0
+      },
+      {
+        label: "Feb",
+        value: 1
+      },
+      {
+        label: "Mar",
+        value: 2
+      },
+      {
+        label: "Apr",
+        value: 3
+      },
+      {
+        label: "May",
+        value: 4
+      },
+      {
+        label: "Jun",
+        value: 5
+      },
+      {
+        label: "Jul",
+        value: 6
+      },
+      {
+        label: "Aug",
+        value: 7
+      },
+      {
+        label: "Sept",
+        value: 8
+      },
+      {
+        label: "Oct",
+        value: 9
+      },
+      {
+        label: "Nov",
+        value: 10
+      },
+      {
+        label: "Dec",
+        value: 11
+      }
+    ];
+
+    const sortOptions: SortOrderItem[] = [
+      {
+        label: 'Ascending',
+        value: 1
+      },
+      {
+        label: 'Descending',
+        value: 2
+      }
+    ]
+
+    this.filterSort = sortOptions;
+    this.filterMonths = months;
     this.filterPhases = phases;
 
     this.searchValue.valueChanges.pipe(startWith('')).subscribe((value) => {
@@ -85,9 +161,19 @@ export class AuctionMobileFilterBarComponent implements OnInit {
     });
   }
 
+  //new month is selected for filter
+  monthSelection(month: MonthItem | null) {
+    this.auctionFilters.monthFilter$.next(month);
+  }
+
   // new year is selected for filter
   yearSelection(year: number) {
     this.auctionFilters.yearFilter$.next(year);
+  }
+
+  //new sort order is selected for filter
+  sortSelection(sortOrder: SortOrderItem | null) {
+    this.auctionFilters.sortFilter$.next(sortOrder);
   }
 
   // new phase is selected for filter
@@ -98,6 +184,8 @@ export class AuctionMobileFilterBarComponent implements OnInit {
   // resets all filters for the auction
   resetFilters() {
     this.auctionFilters.textSearch$.next('');
+    this.auctionFilters.sortFilter$.next(null);
+    this.auctionFilters.monthFilter$.next(null);
     this.auctionFilters.phaseFilter$.next(null);
     this.auctionFilters.yearFilter$.next(-1);
     this.searchValue.setValue('', {
