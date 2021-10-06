@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 // models
-import { PhaseItem } from 'src/app/core/modules/auctions/components/auctions-filter-bar/auctions-filter-bar.component';
+import { PhaseItem, MonthItem, SortOrderItem } from 'src/app/core/modules/auctions/components/auctions-filter-bar/auctions-filter-bar.component';
 
 // rxjs
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
@@ -14,7 +14,9 @@ import { AuctionsService } from './auctions.service';
   providedIn: 'root',
 })
 export class AuctionFiltersService {
+  monthFilter$: BehaviorSubject<MonthItem> = new BehaviorSubject<MonthItem | null>(null);
   yearFilter$: BehaviorSubject<number>;
+  sortFilter$: BehaviorSubject<SortOrderItem> = new BehaviorSubject<SortOrderItem | null>(null);
   textSearch$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   phaseFilter$: BehaviorSubject<PhaseItem | null> =
     new BehaviorSubject<PhaseItem | null>(null);
@@ -34,7 +36,7 @@ export class AuctionFiltersService {
     this.page$.next(actual + 1);
   }
 
-  // start loading auctions ofr the usser
+  // start loading auctions of the usser
   loadAuctions() {
     // getting logged user auctions
     this.auctions$ = this.authService.seller.pipe(

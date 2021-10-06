@@ -37,10 +37,10 @@ jobs:
             - run: npm run build
             - run: firebase projects:list --token "$FIREBASE_TOKEN"
             - run: firebase deploy --only hosting --token "$FIREBASE_TOKEN" --non-interactive
-            - run: cd functions && npm install
-            # - run: npm install
-            # - run: cd ..
-            - run: firebase deploy --only functions --token "$FIREBASE_TOKEN" --non-interactive
+            # - run: cd functions && npm install
+            # # - run: npm install
+            # # - run: cd ..
+            # - run: firebase deploy --only functions --token "$FIREBASE_TOKEN" --non-interactive
             # - slack/notify:
             #     event: fail
             #     mentions: '@sandeepyekkali'
@@ -61,8 +61,8 @@ jobs:
             - run: npm run build
             - run: firebase projects:list --token "$FIREBASE_TOKEN"
             - run: firebase deploy --only hosting --token "$FIREBASE_TOKEN" --non-interactive
-            - run: cd functions && npm install
-            - run: firebase deploy --only functions --token "$FIREBASE_TOKEN"
+            # - run: cd functions && npm install
+            # - run: firebase deploy --only functions --token "$FIREBASE_TOKEN"
             # - slack/notify:
             #     event: fail
             #     mentions: '@sandeepyekkali'
