@@ -14,6 +14,7 @@ export class AuctionsTableComponent implements OnInit {
   shownAuctions$: Observable<Auction[]>;
   originalAuctionList: Observable<string[]> = new Observable();
   empty = false;
+  //sortIndicator: number;
 
   constructor(
     private auctionFiltersService: AuctionFiltersService,
@@ -32,11 +33,13 @@ export class AuctionsTableComponent implements OnInit {
     // auction lists
     const filteredResult = combineLatest([
       this.auctionFiltersService.textSearch$,
+      this.auctionFiltersService.sortFilter$,
       this.auctionFiltersService.phaseFilter$,
       this.auctionFiltersService.yearFilter$,
+      this.auctionFiltersService.monthFilter$,
       this.auctionFiltersService.auctions$,
     ]).pipe(
-      map(([text, phase, year, auctions]) => {
+      map(([text,sort, phase, year,month,auctions]) => {
         this.auctionFiltersService.page$.next(1);
         let filteredAuctions = auctions.filter((a) => a != undefined) ?? [];
         text = text.toLowerCase();
@@ -65,6 +68,12 @@ export class AuctionsTableComponent implements OnInit {
           });
         }
 
+        if(month && month.value >= 0){
+          filteredAuctions = filteredAuctions.filter(
+            (a) => a.startDate && new Date(a.startDate * 1000).getMonth() === month.value
+          );
+        }
+
         if (year > 0) {
           filteredAuctions = filteredAuctions.filter(
             (a) => a.auctionYear === year
@@ -76,7 +85,9 @@ export class AuctionsTableComponent implements OnInit {
             (a) => a.auctionPhase === phase.value
           );
         }
-        filteredAuctions.sort(this.sortAuctionByDate);
+        if(sort && sort.value){
+          filteredAuctions = this.sortAuctionByDateWrapper(filteredAuctions, sort.value);
+        }
         return filteredAuctions;
       })
     );
@@ -101,14 +112,22 @@ export class AuctionsTableComponent implements OnInit {
     this.auctionFiltersService.loadPage();
   }
 
-  sortAuctionByDate(a: Auction, b: Auction) {
-    if (a.createdDate < b.createdDate) {
-      return 1;
-    }
-    if (a.createdDate > b.createdDate) {
-      return -1;
-    }
+  sortAuctionByDateWrapper(auctionsArray: Auction[], sortOrder: number){
+    let sortIndicator: number;
+    if(sortOrder === 1) sortIndicator = -1;
+    else if(sortOrder === 2) sortIndicator = 1;
+    var sortAuctionByDate = (a: Auction, b: Auction)=> {
+      if (a.startDate < b.startDate) {
+        return sortIndicator;
+      }
+      if (a.startDate > b.startDate) {
+        return sortIndicator * (-1);
+      }
 
-    return 0;
+      return 0;
+    }
+    auctionsArray.sort(sortAuctionByDate);
+    return auctionsArray;
   }
+
 }
