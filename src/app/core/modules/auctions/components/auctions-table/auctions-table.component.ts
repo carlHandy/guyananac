@@ -70,7 +70,7 @@ export class AuctionsTableComponent implements OnInit {
 
         if(month && month.value >= 0){
           filteredAuctions = filteredAuctions.filter(
-            (a) => new Date(a.startDate * 1000).getMonth() === month.value
+            (a) => a.startDate && new Date(a.startDate * 1000).getMonth() === month.value
           );
         }
 
