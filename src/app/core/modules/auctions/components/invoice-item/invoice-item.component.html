@@ -6,7 +6,10 @@
     'bg-accent': invoiceDetails.invoiceBalance === 0
   }"
 >
+<div class="grid grid-cols-6 gap-4">
   INVOICE # {{ invoiceDetails.invoiceId }}
+    <div class="col-end-7 col-span-1">TOTAL <b>{{invoiceDetails.invoiceTot | currency }}</b></div>
+  </div>
   <span *ngIf="invoiceDetails.invoiceBalance > 0">
     unpaid invoice amount:
     <span>{{ invoiceDetails.invoiceBalance | currency }}</span>
