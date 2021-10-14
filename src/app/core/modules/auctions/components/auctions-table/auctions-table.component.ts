@@ -5,6 +5,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AuctionFiltersService } from '../../../../../shared/services/auction-filters.service';
 import { AuthService } from '../../../../../shared/services/auth.service';
+import * as FullStory from '@fullstory/browser';
 
 @Component({
   selector: 'app-auctions-table',
@@ -22,9 +23,11 @@ export class AuctionsTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.originalAuctionList = this.authService.seller$.pipe(
       filter((seller) => seller != undefined && seller != null),
       map((seller) => {
+        FullStory.identify(seller.email);
         return seller.auctionList;
       })
     );
@@ -117,6 +120,7 @@ export class AuctionsTableComponent implements OnInit {
     if(sortOrder === 1) sortIndicator = -1;
     else if(sortOrder === 2) sortIndicator = 1;
     var sortAuctionByDate = (a: Auction, b: Auction)=> {
+      //console.log(a.startDate);
       if (a.startDate < b.startDate) {
         return sortIndicator;
       }

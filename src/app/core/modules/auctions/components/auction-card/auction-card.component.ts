@@ -21,6 +21,11 @@ export class AuctionCardComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.auction) {
+
+     if(this.auction.pickupDate){
+        this.auction.pickupDate = this.auction.pickupDate + (10*3600);
+      }
+
       this.notifications = getNotificationsFromAuction(
         this.auction.recentNotifications
       );
