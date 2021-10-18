@@ -13,6 +13,7 @@ import { TeamAddMemberComponent } from '../team-add-member/team-add-member.compo
 // models
 import { TeamMemberRoleEnum } from '@shared/enums/team-member-role.enum';
 import { Team } from '@shared/models/team.model';
+import { Invitation } from '@shared/models/invitation.model';
 
 // services
 import { SellerService } from '@shared/services/seller.service';
@@ -24,12 +25,14 @@ import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConfirmationDialog } from '@shared/components/confirmation/confirmation.dialog';
 import { AuctionsService } from '../../../../../shared/services/auctions.service';
+import { InvitationsService } from '@shared/services/invitations.service';
 
 interface TeamInformation {
   isUserAnAdmin: boolean;
   userId: string;
   adminsIds: string[];
   viewersIds: string[];
+  //invites: string[];
   team: Team;
 }
 
@@ -41,6 +44,7 @@ export class TeamDetailsComponent implements OnInit {
   @Input() teamId: string;
 
   vm$: Observable<TeamInformation>;
+  im$: Observable<Invitation[]>;
   deletingTeam = false;
   roles = TeamMemberRoleEnum;
   constructor(
@@ -49,12 +53,16 @@ export class TeamDetailsComponent implements OnInit {
     private sellerService: SellerService,
     private teamsService: TeamsService,
     private snackBar: MatSnackBar,
-    private auctionsService: AuctionsService
+    private auctionsService: AuctionsService,
+    private inviteService: InvitationsService
   ) {}
 
   ngOnInit(): void {
     const seller = this.authService.baseSeller;
 
+    if(this.teamId){
+      this.im$ = this.inviteService.getAllInvitationByTeamId(this.teamId);
+    }
     if (this.teamId) {
       this.vm$ = this.teamsService.getTeam(this.teamId).pipe(
         filter((t) => t != null && t != undefined),

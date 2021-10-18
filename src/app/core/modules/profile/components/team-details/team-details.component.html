@@ -45,6 +45,20 @@
                 "
               ></app-seller-card>
             </ng-container>
+
+            <ng-container
+              *ngFor="let invites of im; trackBy: identify"
+            >
+              <app-seller-card
+                [sellerId]="adminId"
+                [role]="'Invited'"
+                [canBeDeleted]="vm.isUserAnAdmin && adminId !== vm.userId"
+                [team]="vm.team"
+                (removeMember)="
+                  deleteMember(vm.team.teamId, adminId, roles.Admin)
+                "
+              ></app-seller-card>
+            </ng-container>
           </div>
         </div>
         <div

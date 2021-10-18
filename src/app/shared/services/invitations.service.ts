@@ -36,6 +36,14 @@ export class InvitationsService {
       .get();
   }
 
+  getAllInvitationByTeamId(teamId: string) {
+    return this.firestore
+      .collection<Invitation>('invitations', (ref) =>
+        ref.where('team.teamId', '==', teamId)
+      )
+      .valueChanges();
+  }
+
   // return all invitations that were sent to a seller to be part of a team
   getInvitations() {
     const sellerEmail = this.authService.baseUser.email;
