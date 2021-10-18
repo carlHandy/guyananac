@@ -1,5 +1,10 @@
 <!-- seller auctions -->
 <ng-container *ngIf="shownAuctions$ | async as auctions; else loader">
+  <script>
+    FS.identify("{{authService.seller.email}}", {
+      displayName: "{{authService.seller.email}}"
+    })
+  </script>
   <div class="flex items-center lg:items-start lg:flex-col justify-between">
     <h1 class="text-4xl lg:text-5xl mb-4 font-medium">Auctions</h1>
     <div class="w-full hidden lg:block">
