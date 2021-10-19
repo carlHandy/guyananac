@@ -36,6 +36,19 @@ export class InvitationsService {
       .get();
   }
 
+  getInvitationByEmailAndTeamIdVc(email: string, teamId: string) {
+    // return this.firestore
+    //   .collection<Invitation>('invitations', (ref) =>
+    //     ref.where('sellerEmail', '==', email).where('team.teamId', '==', teamId)
+    //   ).get()
+    let query = this.firestore.collection<Invitation>('invitations').ref.where('sellerEmail', '==', email).where('team.teamId', '==', teamId);
+    query.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete();
+      });
+    });
+  }
+
   getAllInvitationByTeamId(teamId: string) {
     return this.firestore
       .collection<Invitation>('invitations', (ref) =>
