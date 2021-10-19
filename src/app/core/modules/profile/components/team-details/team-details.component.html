@@ -45,6 +45,17 @@
                 "
               ></app-seller-card>
             </ng-container>
+
+            <ng-container *ngIf="im$ | async as im">
+              <ng-container
+                *ngFor="let invite of im; trackBy: identify"
+              >
+                <app-invite-card
+                  [sellerEmail]="invite.sellerEmail"
+                  [invitationId]="invite"
+                ></app-invite-card>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
         <div
