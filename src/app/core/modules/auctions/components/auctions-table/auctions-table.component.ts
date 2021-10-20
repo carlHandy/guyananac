@@ -27,7 +27,9 @@ export class AuctionsTableComponent implements OnInit {
     this.originalAuctionList = this.authService.seller$.pipe(
       filter((seller) => seller != undefined && seller != null),
       map((seller) => {
-        FullStory.identify(seller.email);
+        FullStory.identify(seller.email, {
+          displayName: seller.email
+        });
         return seller.auctionList;
       })
     );
