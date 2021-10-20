@@ -155,6 +155,23 @@ export class TeamsService {
       .update(teamUpdate);
   }
 
+  updateTeam(
+    teamId: string,
+    teamName: string,
+  ) {
+    let teamUpdate = {};
+    teamUpdate = {
+      teamName,
+    };
+
+    teamUpdate['modifiedDate'] = getCurrentTimeFixed();
+
+    return this.firestore
+      .collection('teams')
+      .doc(teamId)
+      .update(teamUpdate);
+  }
+
   // updates partner image url of a team
   updatePartnerImage(teamId: string, logoURL: string) {
     let teamUpdate = {};
