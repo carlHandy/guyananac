@@ -41,7 +41,6 @@ export class TeamPartnerInformationComponent implements OnInit {
         Validators.maxLength(100),
       ]),
       shopUrl: new FormControl('', [
-        Validators.required,
         Validators.maxLength(256),
       ]),
       companyDescription: new FormControl('', [
@@ -108,7 +107,7 @@ export class TeamPartnerInformationComponent implements OnInit {
       country: this.team.teamCountry ?? AddressCountryEnum.Canada,
     };
 
-    const { companyName, shopUrl, companyDescription, companyHomePage } =
+    const { companyName, companyDescription, companyHomePage } =
       this.partnerForm.value;
     this.teamsService
       .updatePartner(
