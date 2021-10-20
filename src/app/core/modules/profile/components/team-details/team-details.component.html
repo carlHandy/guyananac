@@ -14,7 +14,32 @@
       >
         <h1 class="font-medium text-left mb-4">
           <h2 class="text-lg text-accent mb-0">#{{ vm.team.teamNumber }}</h2>
-          <span class="text-2xl font-bold -mt-2">{{ vm.team.teamName }}</span>
+          <form [formGroup]="teamForm">
+            <ng-container *ngIf="!loading; else loader">
+            <span *ngIf="!editMode" class="text-4xl font-bold -mt-2"> {{vm.team.teamName}} </span>
+            <span class="text-4xl font-bold -mt-2">
+              <input
+                style="width: max-content"
+                *ngIf="editMode"
+                formControlName="teamName"
+                matInput
+                required
+                type="text"
+                placeholder="{{vm.team.teamName}}"
+                autofocus
+              />
+              <i *ngIf="!editMode" (click)="editMode = true;"
+              style="color: #1fa0ba; cursor: pointer;" class="las la-edit">
+            </i>
+            <i *ngIf="editMode" (click)="editMode = false; fillForm();"
+            style="color: #1fa0ba; cursor: pointer;" class="las la-window-close">
+          </i>
+            <i *ngIf="editMode" (click)="updateTeamName()"
+            style="color: #1fa0ba; cursor: pointer;" class="las la-save">
+          </i>
+          </span>
+          </ng-container>
+        </form>
         </h1>
         <div class="bg-light-blue-2 rounded-lg p-4 pb-0.5 mb-2">
           <div class="w-full">
@@ -44,6 +69,17 @@
                   deleteMember(vm.team.teamId, viewerId, roles.Viewer)
                 "
               ></app-seller-card>
+            </ng-container>
+
+            <ng-container *ngIf="im$ | async as im">
+              <ng-container
+                *ngFor="let invite of im; trackBy: identify"
+              >
+                <app-invite-card
+                  [sellerEmail]="invite.sellerEmail"
+                  [invitationId]="invite"
+                ></app-invite-card>
+              </ng-container>
             </ng-container>
           </div>
         </div>

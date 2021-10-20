@@ -25,6 +25,7 @@ import { GooglePlacesDirective } from './directives/google-places.directive';
 import { AuctionDateShortPipe } from './pipes/auction-date-short.pipe';
 import { AuctionDatePipe } from './pipes/auction-date.pipe';
 import { ScrollDirective } from './directives/scroll.directive';
+import { InviteCardComponent } from './components/invite-card/invite-card.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ScrollDirective } from './directives/scroll.directive';
     AuctionDateShortPipe,
     AuctionDatePipe,
     ScrollDirective,
+    InviteCardComponent,
   ],
   imports: [CommonModule, MaterialModule, ReactiveFormsModule],
   exports: [
@@ -64,6 +66,7 @@ import { ScrollDirective } from './directives/scroll.directive';
     AuctionDateShortPipe,
     AuctionDatePipe,
     ScrollDirective,
+    InviteCardComponent,
   ],
 })
 export class SharedModule {}
