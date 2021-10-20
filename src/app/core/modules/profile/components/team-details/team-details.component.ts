@@ -24,6 +24,7 @@ import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConfirmationDialog } from '@shared/components/confirmation/confirmation.dialog';
 import { AuctionsService } from '../../../../../shared/services/auctions.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 interface TeamInformation {
   isUserAnAdmin: boolean;
@@ -39,8 +40,12 @@ interface TeamInformation {
 })
 export class TeamDetailsComponent implements OnInit {
   @Input() teamId: string;
+  teamForm: FormGroup;
+  editMode = false;
+  loading = false;
+  vm: Array<any>;
 
-  vm$: Observable<TeamInformation>;
+  @Input() vm$: Observable<TeamInformation>;
   deletingTeam = false;
   roles = TeamMemberRoleEnum;
   constructor(
@@ -50,7 +55,14 @@ export class TeamDetailsComponent implements OnInit {
     private teamsService: TeamsService,
     private snackBar: MatSnackBar,
     private auctionsService: AuctionsService
-  ) {}
+  ) {
+    this.teamForm = new FormGroup({
+      teamName: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(256),
+      ]),
+    })
+  }
 
   ngOnInit(): void {
     const seller = this.authService.baseSeller;
@@ -70,7 +82,7 @@ export class TeamDetailsComponent implements OnInit {
           if (vm.adminsIds.find((a) => a === seller.sellerId)) {
             vm.isUserAnAdmin = true;
           }
-
+          console.log('vm-observable', vm.team);
           return vm;
         })
       );
@@ -167,5 +179,53 @@ export class TeamDetailsComponent implements OnInit {
           });
       }
     });
+  }
+
+  // filling form for team name
+  fillForm() {
+     this.teamForm.get('teamName')
+      ?.patchValue(this.vm$[this.teamId]);                                                                                                                                                                                                                                       
+  }
+
+ 
+  // update team name
+  updateTeamName() {
+    if (this.teamForm.invalid) {
+      this.teamForm.markAllAsTouched();
+    }
+
+    if (!this.vm$) {
+      return;
+    }
+
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    const { teamName } =
+      this.teamForm.value;
+
+    this.teamsService
+      .updateTeam(
+       this.teamId,
+        teamName,
+      )
+      .then(() => {
+        this.snackBar.open(`Team name updated`, '', {
+          duration: 5000,
+        });
+        this.editMode = false;
+      })
+      .catch((error: any) => {
+        console.log('did not update', error);
+        this.snackBar.open(`Team name couldn't be updated`, '', {
+          duration: 5000,
+        });
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 }
