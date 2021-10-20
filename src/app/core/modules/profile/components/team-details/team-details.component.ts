@@ -43,7 +43,6 @@ export class TeamDetailsComponent implements OnInit {
   teamForm: FormGroup;
   editMode = false;
   loading = false;
-  vm: Array<any>;
 
   @Input() vm$: Observable<TeamInformation>;
   deletingTeam = false;
