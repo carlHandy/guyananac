@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TeamsService } from '../../../../../shared/services/teams.service';
 import { AuctionSellerInvitation } from '../../../../../shared/models/auction-seller-invitation';
 import { AuctionObserversService } from '../../../../../shared/services/auction-observers.service';
+import { SellerService } from '../../../../../shared/services/seller.service';
 import { AuctionTeamInvitation } from '../../../../../shared/models/auctionTeamInvitation';
 import { Auction } from '../../../../../shared/models/auction.interface';
 
@@ -23,7 +24,8 @@ export class InviteObserverDialog implements OnInit {
     public data: { auction: Auction },
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<InviteObserverDialog>,
-    private auctionObserversService: AuctionObserversService
+    private auctionObserversService: AuctionObserversService,
+    private sellerService: SellerService,
   ) {
     this.form = new FormGroup({
       type: new FormControl('seller'),
@@ -91,7 +93,7 @@ export class InviteObserverDialog implements OnInit {
     ) {
       this.snackBar.open(
         `Can't invite the team, team is already the owner.`,
-        null,
+        null, 
         {
           duration: 5000,
         }
@@ -131,6 +133,22 @@ export class InviteObserverDialog implements OnInit {
   // handles the invite of a seller to an auction as observer
   async inviteSellerToAuction(sellerEmail: string) {
     sellerEmail = sellerEmail.toLowerCase();
+
+    const snapshot = await this.sellerService.getSellerByEmail(sellerEmail);
+    const seller = snapshot.docs[0].data();
+    const auctionId = window.location.pathname.split('/auctions/')[1]
+
+    if (seller.auctionList.includes(auctionId)) {
+      this.snackBar.open(
+        `Can't invite the seller, seller is already attached to auction.`,
+        null,
+        {
+          duration: 5000,
+        }
+      );
+      return;
+    }
+
     // build invitation
     const invitation: AuctionSellerInvitation = {
       auctionId: this.data.auction.auctionId,
