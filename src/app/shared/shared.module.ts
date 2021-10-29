@@ -26,7 +26,7 @@ import { AuctionDateShortPipe } from './pipes/auction-date-short.pipe';
 import { AuctionDatePipe } from './pipes/auction-date.pipe';
 import { ScrollDirective } from './directives/scroll.directive';
 import { InviteCardComponent } from './components/invite-card/invite-card.component';
-
+import { LinksPipe } from './pipes/links.pipe';
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -47,6 +47,7 @@ import { InviteCardComponent } from './components/invite-card/invite-card.compon
     AuctionDatePipe,
     ScrollDirective,
     InviteCardComponent,
+    LinksPipe
   ],
   imports: [CommonModule, MaterialModule, ReactiveFormsModule],
   exports: [
@@ -67,6 +68,7 @@ import { InviteCardComponent } from './components/invite-card/invite-card.compon
     AuctionDatePipe,
     ScrollDirective,
     InviteCardComponent,
+    LinksPipe
   ],
 })
 export class SharedModule {}
