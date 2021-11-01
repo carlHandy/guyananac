@@ -26,7 +26,7 @@ references:
 jobs:
      deployToDevFirebase:
           docker:
-            - image: node:latest
+            - image: node:14
           steps:
             - checkout
             - run: echo "build steps"
@@ -50,7 +50,7 @@ jobs:
             #     template: success_tagged_deploy_1
      deployToProdFirebase:
           docker:
-            - image: node:latest
+            - image: node:14
           steps:
             - checkout
             - run: echo "build steps"
