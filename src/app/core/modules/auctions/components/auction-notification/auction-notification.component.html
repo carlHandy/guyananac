@@ -41,12 +41,12 @@
         }}
       </div>
       <div class="text-sm">
-        {{ notification.dateSent | auctionDate | date: "longDate" }}
+        {{ notification.dateSent | auctionDate | date: "shortDate" }}
       </div>
     </div>
     {{ notification.friendlyName }}
   </div>
   <div class="w-32 h-12 pt-3 font-medium hidden lg:block">
-    {{ notification.dateSent | auctionDate | date: "longDate" }}
+    {{ notification.dateSent | auctionDate | date: "shortDate" }}
   </div>
 </div>
