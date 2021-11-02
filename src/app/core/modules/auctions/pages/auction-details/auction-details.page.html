@@ -26,7 +26,7 @@
     <div main>
       <mat-accordion>
         <div *ngFor="let nt of vm.notifications">
-          <app-action-notification-expansion-panel
+          <app-action-notification-expansion-panel style="white-space: pre-wrap;"
             [notification]="nt"
           ></app-action-notification-expansion-panel>
         </div>
