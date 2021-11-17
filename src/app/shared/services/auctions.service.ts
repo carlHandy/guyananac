@@ -100,13 +100,14 @@ export class AuctionsService {
     lotId: string,
     invoiceId: string,
     auctionId: string,
-    lot: InvoiceItem
+    lot: InvoiceItem,
+    value: boolean
   ) {
     let lotUpdate = {};
     // updating nested map
     lotUpdate[`invoices.${invoiceId}.items.${lotId}`] = {
       ...lot,
-      pickedUp: true,
+      pickedUp: value,
       // fixes date length
       modifiedDate: getCurrentTimeFixed(),
     };

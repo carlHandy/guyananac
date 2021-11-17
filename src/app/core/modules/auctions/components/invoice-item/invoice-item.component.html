@@ -94,7 +94,6 @@
           }}
 
           <mat-checkbox
-            [disabled]="invoiceItem.pickedUp"
             (change)="
               setPickedUp($event.checked, invoiceItem.lineItemId, invoiceItem)
             "
