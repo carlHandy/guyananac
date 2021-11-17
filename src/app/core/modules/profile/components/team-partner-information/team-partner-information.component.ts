@@ -1,5 +1,7 @@
 import { Address } from './../../../../../shared/models/address.model';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -10,12 +12,16 @@ import { Team } from '@shared/models/team.model';
 
 // services
 import { TeamsService } from '@shared/services/teams.service';
+import { AuctionsService } from '@shared/services/auctions.service';
+import { AuthService } from '@shared/services/auth.service';
 
 // utils
 import { UpdateProfileImageDialog } from '../update-profile-image/update-profile-image.dialog';
 import { AddressFormComponent } from '@shared/components/address-form/address-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddressCountryEnum } from '@shared/enums/address-country.enum';
+import { data } from 'autoprefixer';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-team-partner-information',
@@ -27,11 +33,15 @@ export class TeamPartnerInformationComponent implements OnInit {
   loading = false;
   partnerForm: FormGroup;
   editMode: false;
+  Token360: any;
 
   @ViewChild(AddressFormComponent) addressForm: AddressFormComponent;
 
   constructor(
     private teamsService: TeamsService,
+    private auctionsService: AuctionsService,
+    private authService: AuthService,
+    private http: HttpClient,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
@@ -73,6 +83,13 @@ export class TeamPartnerInformationComponent implements OnInit {
     this.partnerForm
       .get('companyHomePage')
       .patchValue(this.partnerProfile.companyURL);
+  }
+
+  async get360Token() {
+    return this.http.get(`${environment.cloudFunctionsBaseUrl}get360Token`)
+      .subscribe(response => {
+      console.log(response);
+    });
   }
 
   // updates partner information
@@ -152,6 +169,23 @@ export class TeamPartnerInformationComponent implements OnInit {
             this.snackBar.open(`Partner image updated`, null, {
               duration: 5000,
             });
+            // const auctions = this.auctionsService.getAuctionsByTeamId(this.team.teamId);
+            const body = {
+              auction_ids: [
+                 167
+              ],
+              image_url: data.url,
+              partner_url: this.team.partnerProfile.companyURL
+            }
+            this.http.post('https://maxsold-test.maxsold.com/mapi/auctions/updatepartnerlogo', body,       {
+              headers: {
+                'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MzcxNTkzNTIsImlzcyI6Im1heHNvbGQtdGVzdC5tYXhzb2xkLmNvbSIsImV4cCI6MTYzNzE3MDE1MiwidXNlcl9kYXRhIjp7ImlkIjoiNzEiLCJjb25zaWdub3JfaWQiOiI4IiwiZnVsbF9uYW1lIjoiVGVzdCBDb25zaWdub3IifSwidW5pcXVlX3N0cmluZyI6IjEyMGQxMTZlNDNlNDMwNWMifQ.x5pc0H2vtlLhpfa7Ymh43QXZchagPggjsw9sPxBdp4s',
+                'Content-Type': 'application/json',
+              },
+            }).subscribe(response => {
+               console.log('respose', response);
+               console.log('teamData', this.team);
+             })
           })
           .catch((error) => {
             this.snackBar.open(`Partner image couldn't be updated`, null, {
@@ -165,7 +199,6 @@ export class TeamPartnerInformationComponent implements OnInit {
       }
     });
   }
-
   // disables form inputs
   disableForm() {
     this.partnerForm.disable();
