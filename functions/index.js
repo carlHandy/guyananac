@@ -6,6 +6,7 @@ const invoices = require("./invoices");
 const teams = require("./teams");
 const auctions = require("./auctions");
 const changeOwner = require("./change-owner");
+const changePartnerLogo = require("./change-partner-logo");
 
 // pdf
 exports.getPdf = invoices.getPdf;
@@ -20,3 +21,5 @@ exports.acceptTeamObserverInvitation = auctions.acceptTeamObserverInvitation;
 // owners
 exports.changeOwnerSeller = changeOwner.changeOwnerSeller;
 exports.changeOwnerTeam = changeOwner.changeOwnerTeam;
+// partner logo
+exports.get360Token = changePartnerLogo.get360Token;
