@@ -8,8 +8,8 @@ const cors = require("cors")({
 exports.get360Token = functions.https.onRequest(async (req, res) => {
     // allow cors request
     return cors(req, res, () => {
-            let user = 'testbidder5';
-            return axios.post('https://maxsold-test.maxsold.com/mapi/auctions/updatepartnerlogo', {username: user}, {
+            let user = 'jon.lenton@maxsold.com';
+            return axios.post('https://maxsold.maxsold.com/mapi/auctions/updatepartnerlogo', {username: user}, {
                 headers: {
                     'x-api-key': 'aa7f20e2d7a6204d30d7eadd3cb6841d9d0f97bd'
                 }
