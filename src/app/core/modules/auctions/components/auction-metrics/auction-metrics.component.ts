@@ -3,10 +3,15 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Input,
+  NgZone,
 } from '@angular/core';
-import { Auction } from '../../../../../shared/models/auction.interface';
 import { TimeZonesService } from '../../../../../shared/services/time-zones.service';
 import { AuthService } from '../../../../../shared/services/auth.service';
+import { AuctionsService } from '@shared/services/auctions.service';
+import { Observable } from 'rxjs';
+import { Auction } from '@shared/models/auction.interface';
+import axios from 'axios';
+
 
 @Component({
   selector: 'app-auction-metrics',
@@ -18,36 +23,72 @@ export class AuctionMetricsComponent implements OnInit {
   @Input() set auction(auction: Auction) {
     this.updateAuctionInfo(auction);
   }
-
+  auction$: Observable<Auction>;
+  
   state: string = '';
   dates: string[] = [];
   bids: number[] = [];
   bidsCount: number[] = [];
   sellThro: number[] = [];
   revenues: number[] = [];
-
+  
   lastBids: number;
   lastBidsCount: number;
   lastSellThro: number;
   lastRevenue: number;
   totalViews: number;
   numberOfLots: number;
-
+  
   timeDiff: string = '';
+  winners: any;
+  id: number;
+  win: string;
+  noData: string;
 
   constructor(
     private timeZoneSrv: TimeZonesService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private auctionService: AuctionsService,
+    private _ngZone: NgZone
+  ) {
+   
 
-  ngOnInit(): void {}
+  }
+
+  ngOnInit(): void {
+    this._ngZone.run(() => {
+     this.getWinningBidders();
+  });
+   this.win = localStorage.getItem('winner');
+   this.noData = localStorage.getItem('winner-no-data');
+  }
+  
+  async getWinningBidders(): Promise<void> {
+    const auctionId = window.location.pathname.split('/auctions/')[1];
+    this.auction$ = this.auctionService.getAuctionById(auctionId);
+    this.auction$.subscribe(e => {
+    this.auction = e;
+      let id = e.am_auction_id;
+      axios.get<any>(
+        `https://maxsold-test4.maxsold.com/mapi/auctions/bidsinfo?auction_id=${id}`)
+        .then(response => {
+          this.winners = response.data.data.number_of_winning_bidders;
+          localStorage.removeItem('winner-no-data');
+          localStorage.setItem('winner', this.winners);
+        }).catch(err => {
+          if(err == "TypeError: Cannot read properties of undefined (reading 'number_of_winning_bidders')") {
+            localStorage.removeItem('winner');
+            localStorage.setItem('winner-no-data', 'No data available for this auction');
+          }
+        })
+      });
+  }
 
   // extracts and update auction info for metrics displays upon input updates
   updateAuctionInfo(auction: Auction) {
     if (!auction.hourlyLabel || auction.hourlyLabel === '') {
       return;
     }
-    console.log(auction);
 
     this.totalViews = auction.lotViews;
     this.numberOfLots = auction.numberOfLots;
@@ -123,4 +164,5 @@ export class AuctionMetricsComponent implements OnInit {
 
     return difference;
   }
+
 }
