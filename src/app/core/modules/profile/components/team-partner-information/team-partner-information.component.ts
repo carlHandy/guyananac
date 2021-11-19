@@ -20,7 +20,6 @@ import { UpdateProfileImageDialog } from '../update-profile-image/update-profile
 import { AddressFormComponent } from '@shared/components/address-form/address-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddressCountryEnum } from '@shared/enums/address-country.enum';
-import { data } from 'autoprefixer';
 import { environment } from '../../../../../../environments/environment';
 
 @Component({
@@ -33,7 +32,9 @@ export class TeamPartnerInformationComponent implements OnInit {
   loading = false;
   partnerForm: FormGroup;
   editMode: false;
-  Token360: any;
+  amToken: string;
+  auction_ids = [];
+  list = '';
 
   @ViewChild(AddressFormComponent) addressForm: AddressFormComponent;
 
@@ -69,6 +70,7 @@ export class TeamPartnerInformationComponent implements OnInit {
     if (this.partnerProfile != undefined) {
       this.fillForm();
     }
+    this.get360Token();
   }
 
   // fills the partner information info if team is a partner
@@ -86,9 +88,16 @@ export class TeamPartnerInformationComponent implements OnInit {
   }
 
   async get360Token() {
-    return this.http.get(`${environment.cloudFunctionsBaseUrl}get360Token`)
+    const token = await this.authService.baseUser.getIdToken();
+    return this.http.get(`${environment.cloudFunctionsBaseUrl}get360Token`, 
+    {
+        headers: {
+          'authorization': token,
+          'Content-Type': 'application/json',
+        },
+    })
       .subscribe(response => {
-      console.log(response);
+        this.amToken = response["body"].data.token;
     });
   }
 
@@ -169,28 +178,49 @@ export class TeamPartnerInformationComponent implements OnInit {
             this.snackBar.open(`Partner image updated`, null, {
               duration: 5000,
             });
-            // const auctions = this.auctionsService.getAuctionsByTeamId(this.team.teamId);
-            const body = {
-              auction_ids: [
-                 167
-              ],
-              image_url: data.url,
-              partner_url: this.team.partnerProfile.companyURL
-            }
-            this.http.post('https://maxsold-test.maxsold.com/mapi/auctions/updatepartnerlogo', body,       {
-              headers: {
-                'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MzcxNTkzNTIsImlzcyI6Im1heHNvbGQtdGVzdC5tYXhzb2xkLmNvbSIsImV4cCI6MTYzNzE3MDE1MiwidXNlcl9kYXRhIjp7ImlkIjoiNzEiLCJjb25zaWdub3JfaWQiOiI4IiwiZnVsbF9uYW1lIjoiVGVzdCBDb25zaWdub3IifSwidW5pcXVlX3N0cmluZyI6IjEyMGQxMTZlNDNlNDMwNWMifQ.x5pc0H2vtlLhpfa7Ymh43QXZchagPggjsw9sPxBdp4s',
-                'Content-Type': 'application/json',
-              },
-            }).subscribe(response => {
-               console.log('respose', response);
-               console.log('teamData', this.team);
-             })
-          })
-          .catch((error) => {
-            this.snackBar.open(`Partner image couldn't be updated`, null, {
-              duration: 5000,
-            });
+
+            const teamAuctions = this.auctionsService.getAuctionsByTeamId(this.team.teamId)
+            .subscribe(data => {
+              data.forEach((ele) => {
+                this.auction_ids.push(ele.am_auction_id)
+              });
+            }); // end get team auction
+            setTimeout(() =>{
+              // start http request
+              this.http.post('https://maxsold.maxsold.com/mapi/auctions/updatepartnerlogo', 
+              {
+                auction_ids: this.auction_ids,
+                image_url: data.url,
+                partner_url: this.team.partnerProfile.companyURL
+              },       {
+                headers: {
+                  'token': this.amToken,
+                  'Content-Type': 'application/json',
+                },
+              }).subscribe(response => {
+                console.log(response);
+              }) 
+            }, 3000 ) // end timeout
+
+          //   this.http.post('https://maxsold.maxsold.com/mapi/auctions/updatepartnerlogo', 
+          //   {
+          //     auction_ids: localStorage.getItem('auction_ids'),
+          //     image_url: data.url,
+          //     partner_url: this.team.partnerProfile.companyURL
+          //   },       {
+          //     headers: {
+          //       'token': this.amToken,
+          //       'Content-Type': 'application/json',
+          //     },
+          //   }).subscribe(response => {
+          //      console.log('RESPONSE', response);
+          //      console.log('IDS', localStorage.getItem('auction_ids'));
+          //    })
+          // })
+          // .catch((error) => {
+          //   this.snackBar.open(`Partner image couldn't be updated`, null, {
+          //     duration: 5000,
+          //   });
           });
       }
 
