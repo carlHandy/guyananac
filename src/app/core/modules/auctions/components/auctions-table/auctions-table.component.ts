@@ -29,7 +29,8 @@ export class AuctionsTableComponent implements OnInit {
       filter((seller) => seller != undefined && seller != null),
       map((seller) => {
         smartlookClient.identify(seller.email, {
-          displayName: seller.email
+          name: seller.firstName + ' ' + seller.lastName,
+          email: seller.email
         });
         return seller.auctionList;
       })
