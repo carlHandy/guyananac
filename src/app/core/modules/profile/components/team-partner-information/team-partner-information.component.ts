@@ -201,26 +201,6 @@ export class TeamPartnerInformationComponent implements OnInit {
                 console.log(response);
               }) 
             }, 3000 ) // end timeout
-
-          //   this.http.post('https://maxsold.maxsold.com/mapi/auctions/updatepartnerlogo', 
-          //   {
-          //     auction_ids: localStorage.getItem('auction_ids'),
-          //     image_url: data.url,
-          //     partner_url: this.team.partnerProfile.companyURL
-          //   },       {
-          //     headers: {
-          //       'token': this.amToken,
-          //       'Content-Type': 'application/json',
-          //     },
-          //   }).subscribe(response => {
-          //      console.log('RESPONSE', response);
-          //      console.log('IDS', localStorage.getItem('auction_ids'));
-          //    })
-          // })
-          // .catch((error) => {
-          //   this.snackBar.open(`Partner image couldn't be updated`, null, {
-          //     duration: 5000,
-          //   });
           });
       }
 
