@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
+// import { Meta } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
-import * as FullStory from '@fullstory/browser';
+// import * as FullStory from '@fullstory/browser';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +19,11 @@ import * as FullStory from '@fullstory/browser';
 export class AppComponent {
   currentApplicationVersion = environment.appVersion;
 
-  constructor(private meta: Meta) {
-    FullStory.init({orgId: '15RXMA'});
-    this.meta.addTag({
-      name: 'version',
-      content: `v${this.currentApplicationVersion}`,
-    });
+  constructor() {
+    // FullStory.init({orgId: '15RXMA'});
+    // this.meta.addTag({
+    //   name: 'version',
+    //   content: `v${this.currentApplicationVersion}`,
+    // });
   }
 }
