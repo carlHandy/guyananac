@@ -136,7 +136,7 @@ export class InviteObserverDialog implements OnInit {
 
     const snapshot = await this.sellerService.getSellerByEmail(sellerEmail);
     const seller = snapshot.docs[0].data();
-    const auctionId = window.location.pathname.split('/auctions/')[1]
+    const auctionId = window.location.pathname.split('/auctions/')[1];
 
     if (seller.auctionList.includes(auctionId)) {
       this.snackBar.open(
