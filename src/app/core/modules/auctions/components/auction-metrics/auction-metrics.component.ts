@@ -5,9 +5,11 @@ import {
   Input,
   NgZone,
 } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { TimeZonesService } from '../../../../../shared/services/time-zones.service';
 import { AuthService } from '../../../../../shared/services/auth.service';
 import { AuctionsService } from '@shared/services/auctions.service';
+import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Auction } from '@shared/models/auction.interface';
 import axios from 'axios';
@@ -38,6 +40,7 @@ export class AuctionMetricsComponent implements OnInit {
   lastRevenue: number;
   totalViews: number;
   numberOfLots: number;
+  amToken: string;
   
   timeDiff: string = '';
   winners: any;
@@ -49,7 +52,8 @@ export class AuctionMetricsComponent implements OnInit {
     private timeZoneSrv: TimeZonesService,
     private authService: AuthService,
     private auctionService: AuctionsService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private http: HttpClient
   ) {
    
 
@@ -61,6 +65,21 @@ export class AuctionMetricsComponent implements OnInit {
   });
    this.win = localStorage.getItem('winner');
    this.noData = localStorage.getItem('winner-no-data');
+   this.get360Token();
+  }
+
+  async get360Token() {
+    const token = await this.authService.baseUser.getIdToken();
+    return this.http.get(`${environment.cloudFunctionsBaseUrl}get360Token`, 
+    {
+        headers: {
+          'authorization': token,
+          'Content-Type': 'application/json',
+        },
+    })
+      .subscribe(response => {
+        this.amToken = response["body"].data.token;
+    });
   }
   
   async getWinningBidders(): Promise<void> {
@@ -70,7 +89,12 @@ export class AuctionMetricsComponent implements OnInit {
     this.auction = e;
       let id = e.am_auction_id;
       axios.get<any>(
-        `https://maxsold-test4.maxsold.com/mapi/auctions/bidsinfo?auction_id=${id}`)
+        `https://maxsold.maxsold.com/mapi/auctions/bidsinfo?auction_id=${id}`, {
+          headers: {
+            'token': this.amToken,
+            'Content-Type': 'application/json'
+          }
+        })
         .then(response => {
           this.winners = response.data.data.number_of_winning_bidders;
           localStorage.removeItem('winner-no-data');
