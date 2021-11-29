@@ -33,11 +33,11 @@ export class InvoiceItemComponent implements OnInit {
 
   // update the auction whenever a lot has been parked as picked up by the user
   setPickedUp(value: boolean, lotId: number, lot) {
-    if (value === true) {
+    if (true) {
       const invoiceId = `I${this.invoiceDetails.invoiceId}`;
       const lotIdString = `L${lotId}`;
       this.auctionService
-        .updateLotPickedUp(lotIdString, invoiceId, this.auctionId, lot)
+        .updateLotPickedUp(lotIdString, invoiceId, this.auctionId, lot, value)
         .then(() => {
           this.snackBar.open(`Invoice updated`, null, {
             duration: 5000,
