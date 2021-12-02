@@ -43,7 +43,7 @@ export class AuctionMetricsComponent implements OnInit {
   amToken: string;
   
   timeDiff: string = '';
-  winners: any;
+  numberofWinners: any;
   id: number;
   win: string;
   noData: string;
@@ -57,15 +57,15 @@ export class AuctionMetricsComponent implements OnInit {
   ) {
    
 
+    this.win = localStorage.getItem('winner');
   }
 
   ngOnInit(): void {
     this._ngZone.run(() => {
      this.getWinningBidders();
+     this.noData = localStorage.getItem('winner-no-data');
+     this.get360Token();
   });
-   this.win = localStorage.getItem('winner');
-   this.noData = localStorage.getItem('winner-no-data');
-   this.get360Token();
   }
 
   async get360Token() {
@@ -88,23 +88,24 @@ export class AuctionMetricsComponent implements OnInit {
     this.auction$.subscribe(e => {
     this.auction = e;
       let id = e.am_auction_id;
-      axios.get<any>(
-        `https://maxsold.maxsold.com/mapi/auctions/bidsinfo?auction_id=${id}`, {
-          headers: {
-            'token': this.amToken,
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => {
-          this.winners = response.data.data.number_of_winning_bidders;
-          localStorage.removeItem('winner-no-data');
-          localStorage.setItem('winner', this.winners);
-        }).catch(err => {
-          if(err == "TypeError: Cannot read properties of undefined (reading 'number_of_winning_bidders')") {
-            localStorage.removeItem('winner');
-            localStorage.setItem('winner-no-data', 'No data available for this auction');
-          }
-        })
+      setTimeout(async () => {
+        await axios.get<any>(
+          `https://maxsold.maxsold.com/mapi/auctions/bidsinfo?auction_id=${id}`, {
+            headers: {
+              'token': this.amToken,
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(response => {
+            this.numberofWinners = response.data.data.number_of_winning_bidders;
+            localStorage.setItem('winners', this.numberofWinners)
+          }).catch(err => {
+            if(err == "TypeError: Cannot read properties of undefined (reading 'number_of_winning_bidders')") {
+              console.log(err)
+            }
+          })
+      }, 1500)
+  
       });
   }
 
