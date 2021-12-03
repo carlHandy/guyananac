@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
   NgZone,
+  ChangeDetectorRef 
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TimeZonesService } from '../../../../../shared/services/time-zones.service';
@@ -12,7 +13,6 @@ import { AuctionsService } from '@shared/services/auctions.service';
 import { environment } from '../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Auction } from '@shared/models/auction.interface';
-import axios from 'axios';
 
 
 @Component({
@@ -25,6 +25,8 @@ export class AuctionMetricsComponent implements OnInit {
   @Input() set auction(auction: Auction) {
     this.updateAuctionInfo(auction);
   }
+  
+  numberOfWinners: number;
   auction$: Observable<Auction>;
   
   state: string = '';
@@ -43,29 +45,22 @@ export class AuctionMetricsComponent implements OnInit {
   amToken: string;
   
   timeDiff: string = '';
-  winners: any;
   id: number;
-  win: string;
-  noData: string;
-
+  
   constructor(
     private timeZoneSrv: TimeZonesService,
     private authService: AuthService,
     private auctionService: AuctionsService,
     private _ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
     private http: HttpClient
-  ) {
-   
-
-  }
-
+    ) {}
+    
   ngOnInit(): void {
     this._ngZone.run(() => {
-     this.getWinningBidders();
-  });
-   this.win = localStorage.getItem('winner');
-   this.noData = localStorage.getItem('winner-no-data');
-   this.get360Token();
+      this.get360Token();
+      this.getWinningBidders();
+    });
   }
 
   async get360Token() {
@@ -81,30 +76,26 @@ export class AuctionMetricsComponent implements OnInit {
         this.amToken = response["body"].data.token;
     });
   }
-  
-  async getWinningBidders(): Promise<void> {
+
+async getWinningBidders() {
     const auctionId = window.location.pathname.split('/auctions/')[1];
     this.auction$ = this.auctionService.getAuctionById(auctionId);
     this.auction$.subscribe(e => {
-    this.auction = e;
       let id = e.am_auction_id;
-      axios.get<any>(
-        `https://maxsold.maxsold.com/mapi/auctions/bidsinfo?auction_id=${id}`, {
+      setTimeout(async () => {
+        return this.http.get<any>(
+          `https://maxsold.maxsold.com/mapi/auctions/bidsinfo?auction_id=${id}`, {
           headers: {
             'token': this.amToken,
             'Content-Type': 'application/json'
           }
         })
-        .then(response => {
-          this.winners = response.data.data.number_of_winning_bidders;
-          localStorage.removeItem('winner-no-data');
-          localStorage.setItem('winner', this.winners);
-        }).catch(err => {
-          if(err == "TypeError: Cannot read properties of undefined (reading 'number_of_winning_bidders')") {
-            localStorage.removeItem('winner');
-            localStorage.setItem('winner-no-data', 'No data available for this auction');
-          }
-        })
+          .subscribe(response => {
+            this.numberOfWinners = response.data.number_of_winning_bidders;
+            this.cdr.detectChanges();
+          })
+      }, 1500)
+  
       });
   }
 
