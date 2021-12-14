@@ -29,8 +29,8 @@ export class PreferencesComponent implements OnInit {
       map((seller) => {
         if (!seller.notificationPref) {
           return {
-            important: false,
-            info: false,
+            important: true,
+            info: true,
           };
         } else {
           return {

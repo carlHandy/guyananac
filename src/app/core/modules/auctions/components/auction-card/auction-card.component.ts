@@ -26,6 +26,14 @@ export class AuctionCardComponent implements OnInit {
         this.auction.pickupDate = this.auction.pickupDate + (10*3600);
       }
 
+      // if(this.auction.startDate){
+      //   this.auction.startDate = this.auction.startDate + (5*3600)
+      // }
+
+      // if(this.auction.endDate){
+      //   this.auction.endDate = this.auction.endDate + (5*3600)
+      // }
+
       this.notifications = getNotificationsFromAuction(
         this.auction.recentNotifications
       );
