@@ -1,3 +1,5 @@
+import './trusted-security-policies.js';
+
 function patchPostCSS(webpackConfig, tailwindConfig, components = false) {
   if (!tailwindConfig) {
     console.error("Missing tailwind config :", tailwindConfig);
