@@ -1,9 +1,7 @@
 import DOMPurify from 'dompurify';
 
-if (window.trustedTypes && window.trustedTypes.createPolicy) { // Feature testing
-    window.trustedTypes.createPolicy('default', {
-        createHTML: (string) => DOMPurify.sanitize(string, {RETURN_TRUSTED_TYPE: true}),
-        createScriptURL: string => string, // warning: this is unsafe!
-        createScript: string => string, // warning: this is unsafe!
+if (window.trustedTypes && trustedTypes.createPolicy) { // Feature testing
+    trustedTypes.createPolicy('default', {
+      createHTML: (string, sink) => DOMPurify.sanitize(string, {RETURN_TRUSTED_TYPE: true})
     });
-}
+  }

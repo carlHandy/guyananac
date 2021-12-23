@@ -24,7 +24,7 @@
         { "key" : "Strict-Transport-Security", "value" : "max-age=63072000; includeSubDomains; preload" },
         {
           "key": "Content-Security-Policy",
-          "value": "trusted-types angular angular#unsafe-bypass angular#bundler google-maps-api#html; require-trusted-types-for 'script'; default-src https: 'unsafe-inline'; frame-ancestors 'none'"
+          "value": "trusted-types default angular angular#unsafe-bypass angular#bundler google-maps-api#html; require-trusted-types-for 'script'; default-src https: 'unsafe-inline'; frame-ancestors 'none'"
         }
       ]
     }]
