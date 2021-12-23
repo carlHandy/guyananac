@@ -29,7 +29,6 @@
     "@swimlane/ngx-charts": "^17.0.1",
     "@types/googlemaps": "^3.39.12",
     "autoprefixer": "^10.3.1",
-    "dompurify": "^2.3.4",
     "firebase": "^7.0 || ^8.0",
     "ngx-mask": "^11.1.5",
     "ngx-spinner": "^11.0.2",
