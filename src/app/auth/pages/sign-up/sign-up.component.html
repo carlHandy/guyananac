@@ -177,6 +177,13 @@
             >
               <mat-error>Passwords don't match</mat-error>
             </div>
+            <div
+              *ngIf="(signUpForm.get('password')?.errors?.pattern) &&
+              signUpForm.get('password').touched "
+              class="flex justify-center mb-3"
+            >
+            <mat-error>Password should be at least 8 characters long, has 1 special character, 1 uppercase, 1 lowecase and 1 number</mat-error>
+          </div>
             <div>
               <button
                 *ngIf="!requesting; else loader"
