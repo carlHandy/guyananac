@@ -131,7 +131,8 @@ export class SignInComponent implements OnInit {
     await load(environment.recaptcha.siteKey, {
       useEnterprise: true
     }).then((recaptcha) => {
-       recaptcha.execute('login');
+       const token = recaptcha.execute('login');
+       console.log('tk', token);
     });
   }
 }
