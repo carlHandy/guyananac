@@ -1,6 +1,9 @@
 export const environment = {
   production: true,
   appVersion: require('../../package.json').version,
+  recaptcha: {
+    siteKey: '6LcGLfodAAAAANxDaTurnGy7eA6hBxqk-JWNey4w'
+  },
   firebase: {
     apiKey: 'AIzaSyD_hfDc7NWCsTWBkhtQk4jkDc9ch2BNYKU',
     authDomain: 'seller.maxsold.dev',
