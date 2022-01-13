@@ -2,6 +2,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { load } from 'recaptcha-v3';
+import { environment } from 'src/environments/environment';
 
 // services
 import { AuthService } from '../../../shared/services/auth.service';
@@ -53,6 +55,7 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkRememberEmail();
+    this.loadCaptcha();
   }
 
   // checks if remember email and value are stored in the localstorage
@@ -122,5 +125,13 @@ export class SignInComponent implements OnInit {
       .finally(() => {
         this.requesting = false;
       });
+  }
+
+  async loadCaptcha() {
+    await load(environment.recaptcha.siteKey, {
+      useEnterprise: true
+    }).then((recaptcha) => {
+       recaptcha.execute('login');
+    });
   }
 }

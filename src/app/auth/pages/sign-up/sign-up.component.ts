@@ -2,6 +2,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { load } from 'recaptcha-v3';
+import { environment } from 'src/environments/environment';
 
 // services
 import { AuthService } from '../../../shared/services/auth.service';
@@ -149,5 +151,13 @@ export class SignUpComponent {
     const password = group.get('password').value;
     const confirmPassword = group.get('passwordConfirmation').value;
     return password === confirmPassword ? null : { noEqual: true };
+  }
+
+  async loadCaptcha() {
+    await load(environment.recaptcha.siteKey, {
+      useEnterprise: true
+    }).then((recaptcha) => {
+       recaptcha.execute('register');
+    });
   }
 }
