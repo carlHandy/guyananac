@@ -2,7 +2,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { load } from 'recaptcha-v3';
+// import { load } from 'recaptcha-v3';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -32,6 +32,26 @@ export class SignInComponent implements OnInit {
   errorMessage: string;
   rememberEmail: boolean;
   showPassword = false;
+  userIP: number;
+  userAgent: string;
+
+  public addTokenLog(message: string, token: string | null) {
+    this.http.post(`https://recaptchaenterprise.googleapis.com/v1beta1/projects/maxsold-seller-portal/assessments?key=AIzaSyAwWEWCBqBWNvy796Za9VUIsJfrGRYOAAo`, {
+      "event": {
+        "token": token,
+        "siteKey": environment.recaptcha.challengeKey,
+        "expectedAction": "login",
+        "userIpAddress": this.userIP,
+        "userAgent": this.userAgent
+      }
+    }).subscribe(response => {
+      if (environment.production == true) {
+        return response;
+      }
+      console.log('captcha', response);
+      return response;
+    })
+  }
 
   constructor(
     private authService: AuthService,
@@ -56,8 +76,9 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUserIP();
     this.checkRememberEmail();
-    this.loadCaptcha();
+    // this.loadCaptchaV3();
   }
 
   // checks if remember email and value are stored in the localstorage
@@ -129,38 +150,57 @@ export class SignInComponent implements OnInit {
       });
   }
 
-  async loadCaptcha() {
-    const recaptcha = await load(environment.recaptcha.siteKey, {
-      useEnterprise: true
-    });
-
-    const token = await recaptcha.execute('login');
 
 
-    this.http.post(`https://recaptchaenterprise.googleapis.com/v1beta1/projects/maxsold-seller-portal/assessments?key=AIzaSyAwWEWCBqBWNvy796Za9VUIsJfrGRYOAAo`, {
-      "event": {
-        "token": token,
-        "siteKey": environment.recaptcha.siteKey,
-        "expectedAction": "login"
-      }
-    }).subscribe(response => {
-      const score = response["score"];
-      const data = response;
+  // async loadCaptchaV3() {
+  //   const recaptcha = await load(environment.recaptcha.challengeKey, {
+  //     useEnterprise: true
+  //   });
 
-      if (score == 0.9) {
-        this.http.post('https://hooks.slack.com/services/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' , 
-        {
-          data
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        }
-        ).subscribe(response => {
-          console.log('slack message sent', response);
-        })
-      }
-    }) 
+  //   const token = await recaptcha.execute('login');
+  //   const userAgent = navigator.userAgent;
 
+
+  //   this.http.post(`https://recaptchaenterprise.googleapis.com/v1beta1/projects/maxsold-seller-portal/assessments?key=AIzaSyAwWEWCBqBWNvy796Za9VUIsJfrGRYOAAo`, {
+  //     "event": {
+  //       "token": token,
+  //       "siteKey": environment.recaptcha.challengeKey,
+  //       "expectedAction": "login",
+  //       "userIpAddress": this.userIP,
+  //       "userAgent": userAgent
+  //     }
+  //   }).subscribe(response => {
+  //     const score = response["score"];
+  //     const payload = 
+  //       {
+  //         "Bad Actor IP Address": response["event"].userIpAddress,
+  //         "Bad Actor Agent": response["event"].userAgent,
+  //         "Expected Action": response["event"].expectedAction,
+  //         "Score": response["score"],
+  //         "Block Reason": response["tokenProperties"].invalidReason,
+  //         "Action": response["tokenProperties"].action,
+  //         "Time": response["tokenProperties"].createTime,
+  //       };
+
+  //     if (score <= 0.2) {
+  //       this.http.post('https://fathomless-temple-12853.herokuapp.com/t94juqt9' , payload, {
+  //         headers: {
+  //           'Content-Type': 'application/x-www-form-urlencoded'
+  //         }
+  //       }
+  //       ).subscribe(response => {
+  //         console.log('slack message sent', response);
+  //       })
+  //     }
+  //   }) 
+
+  // }
+
+  async getUserIP(){
+     this.userAgent = navigator.userAgent;
+
+    this.http.get('https://api.ipify.org/?format=json').subscribe(response => {
+      this.userIP = response["ip"];
+    })
   }
 }

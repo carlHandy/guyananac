@@ -170,6 +170,9 @@
               Forgot Password?
             </p>
           </div>
+          <div style="transform:scale(0.7);transform-origin:0;">
+            <re-captcha (resolved)="addTokenLog('Captcha Resolved', $event)"></re-captcha>
+          </div>
           <button
             *ngIf="!requesting; else loader"
             mat-flat-button
@@ -177,7 +180,8 @@
             color="accent"
           >
             LOGIN
-          </button>
+        </button>
+
           <ng-template #loader>
             <app-loader-box></app-loader-box>
           </ng-template>
