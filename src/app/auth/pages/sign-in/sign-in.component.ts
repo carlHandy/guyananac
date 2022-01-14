@@ -151,6 +151,10 @@ export class SignInComponent implements OnInit {
         this.http.post('https://hooks.slack.com/services/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' , 
         {
           data
+        }, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
         }
         ).subscribe(response => {
           console.log('slack message sent', response);
