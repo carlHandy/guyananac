@@ -2,8 +2,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { load } from 'recaptcha-v3';
+// import { load } from 'recaptcha-v3';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 // services
 import { AuthService } from '../../../shared/services/auth.service';
@@ -28,12 +29,33 @@ export class SignUpComponent {
   requesting: boolean = false;
   showPassword = false;
   showPasswordConf = false;
+  userIP: number;
+  userAgent: string;
+
+  public addTokenLog(message: string, token: string | null) {
+    this.http.post(`https://recaptchaenterprise.googleapis.com/v1beta1/projects/maxsold-seller-portal/assessments?key=AIzaSyAwWEWCBqBWNvy796Za9VUIsJfrGRYOAAo`, {
+      "event": {
+        "token": token,
+        "siteKey": environment.recaptcha.challengeKey,
+        "expectedAction": "register",
+        "userIpAddress": this.userIP,
+        "userAgent": this.userAgent
+      }
+    }).subscribe(response => {
+      if (environment.production == true) {
+        return response;
+      }
+      console.log('captcha', response);
+      return response;
+    })
+  }
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private sellerservice: SellerService
+    private sellerservice: SellerService,
+    private http: HttpClient
   ) {
     this.signUpForm = new FormGroup(
       {
@@ -53,6 +75,8 @@ export class SignUpComponent {
       },
       { validators: this.checkPasswords }
     );
+
+    this.getUserIP();
   }
 
   // creates a new user with firebase email/password
@@ -153,12 +177,12 @@ export class SignUpComponent {
     return password === confirmPassword ? null : { noEqual: true };
   }
 
-  async loadCaptcha() {
-    await load(environment.recaptcha.siteKey, {
-      useEnterprise: true
-    }).then((recaptcha) => {
-       recaptcha.execute('register');
-    });
-  }
+  async getUserIP(){
+    this.userAgent = navigator.userAgent;
+
+   this.http.get('https://api.ipify.org/?format=json').subscribe(response => {
+     this.userIP = response["ip"];
+   })
+ }
   
 }
