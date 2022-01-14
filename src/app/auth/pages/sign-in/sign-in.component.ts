@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { load } from 'recaptcha-v3';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 // services
 import { AuthService } from '../../../shared/services/auth.service';
@@ -35,7 +36,8 @@ export class SignInComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private http: HttpClient,
   ) {
     this.signInForm = new FormGroup({
       email: new FormControl('', [
@@ -128,10 +130,33 @@ export class SignInComponent implements OnInit {
   }
 
   async loadCaptcha() {
-    await load(environment.recaptcha.siteKey, {
+    const recaptcha = await load(environment.recaptcha.siteKey, {
       useEnterprise: true
-    }).then((recaptcha) => {
-       recaptcha.execute('login');
     });
+
+    const token = await recaptcha.execute('login');
+
+
+    this.http.post(`https://recaptchaenterprise.googleapis.com/v1beta1/projects/maxsold-seller-portal/assessments?key=${environment.firebase.apiKey}`, {
+      "event": {
+        "token": token,
+        "siteKey": environment.recaptcha.siteKey,
+        "expectedAction": "login"
+      }
+    }).subscribe(response => {
+      const score = response["score"];
+      const data = response;
+
+      if (score == 0.9) {
+        this.http.post('https://hooks.slack.com/services/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' , 
+        {
+          data
+        }
+        ).subscribe(response => {
+          console.log('slack message sent', response);
+        })
+      }
+    }) 
+
   }
 }
