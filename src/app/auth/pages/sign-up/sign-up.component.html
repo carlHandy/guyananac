@@ -184,6 +184,9 @@
             >
             <mat-error>Password must be at least 8 characters long, has 1 special character, 1 uppercase, 1 lowecase and 1 number</mat-error>
           </div>
+          <div style="transform:scale(0.7);transform-origin:0;">
+            <re-captcha [(ngModel)]="captcha" name="captcah" required (resolved)="addTokenLog('Captcha Resolved', $event)"></re-captcha>
+          </div>
             <div>
               <button
                 *ngIf="!requesting; else loader"

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   appVersion: require('../../package.json').version + '-dev',
   recaptcha: {
-    siteKey: '6LdUuQoeAAAAAPIltKthu0eXQcZmXGcwXtB4JxFD'
+    siteKey: '6LdUuQoeAAAAAPIltKthu0eXQcZmXGcwXtB4JxFD',
+    challengeKey: '6Le9YxEeAAAAACOEpDHOdVoCuZ529kmA0DoIrI2F'
   },
   firebase: {
     apiKey: 'AIzaSyD_hfDc7NWCsTWBkhtQk4jkDc9ch2BNYKU',
