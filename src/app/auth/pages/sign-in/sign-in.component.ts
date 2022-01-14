@@ -137,7 +137,7 @@ export class SignInComponent implements OnInit {
     const token = await recaptcha.execute('login');
 
 
-    this.http.post(`https://recaptchaenterprise.googleapis.com/v1beta1/projects/${environment.firebase.projectId}/assessments?key=${environment.firebase.apiKey}`, {
+    this.http.post(`https://recaptchaenterprise.googleapis.com/v1beta1/projects/maxsold-seller-portal/assessments?key=AIzaSyAwWEWCBqBWNvy796Za9VUIsJfrGRYOAAo`, {
       "event": {
         "token": token,
         "siteKey": environment.recaptcha.siteKey,
