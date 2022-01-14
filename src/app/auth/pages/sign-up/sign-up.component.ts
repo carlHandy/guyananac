@@ -31,6 +31,7 @@ export class SignUpComponent {
   showPasswordConf = false;
   userIP: number;
   userAgent: string;
+  captcha:boolean;
 
   public addTokenLog(message: string, token: string | null) {
     this.http.post(`https://recaptchaenterprise.googleapis.com/v1beta1/projects/maxsold-seller-portal/assessments?key=AIzaSyAwWEWCBqBWNvy796Za9VUIsJfrGRYOAAo`, {
@@ -72,6 +73,9 @@ export class SignUpComponent {
           Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
         ]),
         passwordConfirmation: new FormControl(''),
+        captcha: new FormControl('', [
+          Validators.required,
+        ])
       },
       { validators: this.checkPasswords }
     );

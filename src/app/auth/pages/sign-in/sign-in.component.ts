@@ -31,6 +31,7 @@ export class SignInComponent implements OnInit {
   requesting: boolean;
   errorMessage: string;
   rememberEmail: boolean;
+  captcha:boolean;
   showPassword = false;
   userIP: number;
   userAgent: string;
@@ -70,6 +71,9 @@ export class SignInComponent implements OnInit {
         Validators.required,
         Validators.maxLength(256),
       ]),
+      captcha: new FormControl('', [
+        Validators.required,
+      ])
     });
     this.requesting = false;
     this.errorMessage = '';
@@ -106,7 +110,7 @@ export class SignInComponent implements OnInit {
       return;
     }
 
-    let { email, password } = this.signInForm.value;
+    let { email, password, captcha } = this.signInForm.value;
 
     email = (email as string).toLowerCase();
 
