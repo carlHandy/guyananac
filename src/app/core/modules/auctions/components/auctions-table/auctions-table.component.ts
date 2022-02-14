@@ -5,7 +5,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AuctionFiltersService } from '../../../../../shared/services/auction-filters.service';
 import { AuthService } from '../../../../../shared/services/auth.service';
-// import * as FullStory from '@fullstory/browser';
+import * as FullStory from '@fullstory/browser';
 import smartlookClient from 'smartlook-client';
 
 @Component({
