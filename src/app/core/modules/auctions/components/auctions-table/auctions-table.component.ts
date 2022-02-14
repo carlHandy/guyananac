@@ -6,7 +6,6 @@ import { filter, map } from 'rxjs/operators';
 import { AuctionFiltersService } from '../../../../../shared/services/auction-filters.service';
 import { AuthService } from '../../../../../shared/services/auth.service';
 import * as FullStory from '@fullstory/browser';
-import smartlookClient from 'smartlook-client';
 
 @Component({
   selector: 'app-auctions-table',
@@ -28,9 +27,8 @@ export class AuctionsTableComponent implements OnInit {
     this.originalAuctionList = this.authService.seller$.pipe(
       filter((seller) => seller != undefined && seller != null),
       map((seller) => {
-        smartlookClient.identify(seller.email, {
-          name: seller.firstName + ' ' + seller.lastName,
-          email: seller.email
+        FullStory.identify(seller.email, {
+          displayName: seller.email
         });
         return seller.auctionList;
       })
