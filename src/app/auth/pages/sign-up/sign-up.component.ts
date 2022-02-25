@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../shared/services/auth.service';
 import { SellerService } from '../../../shared/services/seller.service';
 import { getAuthMethod } from '../../utils/helpers';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   templateUrl: './sign-up.component.html',
@@ -80,7 +81,6 @@ export class SignUpComponent {
       { validators: this.checkPasswords }
     );
 
-    this.getUserIP();
   }
 
   // creates a new user with firebase email/password
@@ -140,8 +140,11 @@ export class SignUpComponent {
                     });
                 } else {
                   // no seller document found for this email
+                  // create seller ID from email hash that matches what the pythobn job creates
+                  let sellerID = String(CryptoJS.SHA256('s' + email));
+
                   this.sellerservice
-                    .createUserReference(user.user.uid, user.user.uid)
+                    .createUserReference(sellerID, user.user.uid)
                     .then(() => {
                       // references made successfuly
                       this.router.navigateByUrl('/auctions');
@@ -181,12 +184,6 @@ export class SignUpComponent {
     return password === confirmPassword ? null : { noEqual: true };
   }
 
-  async getUserIP(){
-    this.userAgent = navigator.userAgent;
 
-   this.http.get('https://api.ipify.org/?format=json').subscribe(response => {
-     this.userIP = response["ip"];
-   })
- }
   
 }
