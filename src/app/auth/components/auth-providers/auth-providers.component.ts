@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
 import { SellerService } from '../../../shared/services/seller.service';
 import firebase from 'firebase/app';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-auth-providers',
@@ -56,8 +57,9 @@ export class AuthProvidersComponent {
             .catch(this.handleError);
         } else {
           // no seller document found for this email
+          let sellerID = String(CryptoJS.SHA256('s' + user.email));
           this.sellerService
-            .createUserReference(user.uid, user.uid)
+            .createUserReference(sellerID, user.uid)
             .then(() => {
               // references made successfuly
               this.router.navigateByUrl('/auctions');
