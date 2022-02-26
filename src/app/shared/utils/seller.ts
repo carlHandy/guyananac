@@ -5,6 +5,7 @@ import { AddressCountryEnum } from '../enums/address-country.enum';
 import { getAuthMethod } from 'src/app/auth/utils/helpers';
 import { ContactMethodEnum } from '@shared/enums/contact-method.enum';
 import { getCurrentTimeFixed } from './timeStamp';
+import * as CryptoJS from 'crypto-js';
 
 // creates a new seller with the given basic information
 export function createBaseSeller(
@@ -15,7 +16,7 @@ export function createBaseSeller(
   timeZone: string
 ): Seller {
   const seller = new Seller();
-  seller.sellerId = baseUser.uid;
+  seller.sellerId = String(CryptoJS.SHA256('s' + baseUser.email));
   seller.firstName = firstName;
   seller.lastName = lastName;
   seller.country = country;

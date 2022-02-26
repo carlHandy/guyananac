@@ -17,7 +17,7 @@ export class AuctionDatePipe implements PipeTransform {
     }
     const timezone = this.authService.baseSeller.timezone;
     const res = new Date(value * 1000).toLocaleString('en-US', {
-      timeZone: 'UTC',
+      timeZone: timezone ?? this.timeZoneSrv.defaultTimeZoneValue,
     });
 
     return res;
