@@ -65,7 +65,7 @@ export class CreateTeamDialog {
     this.teamsService
       .createTeam(team)
       .then((teamRef) => {
-        team.teamId = String(CryptoJS.SHA256('t' + teamRef.id));
+        team.teamId = teamRef.id;
  
         Promise.all([
           this.teamsService.updateTeamIdField(team.teamId),
