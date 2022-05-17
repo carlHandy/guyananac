@@ -13,6 +13,9 @@
     </button>
   </div>
 </div>
+<ng-container *ngIf="environment == true">
+  <app-maintenance-message></app-maintenance-message>
+</ng-container>
 <ng-container *ngIf="$vm | async as vm else noAuction">
   <!-- auction header -->
   <app-auction-card

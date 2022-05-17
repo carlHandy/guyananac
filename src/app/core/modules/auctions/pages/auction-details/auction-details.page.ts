@@ -14,6 +14,7 @@ import { AuctionsService } from '@shared/services/auctions.service';
 
 // utils
 import { getNotificationsFromAuction } from '@shared/utils/auctions';
+import { environment } from '../../../../../../environments/environment.prod';
 
 interface AuctionDetails {
   auction: Auction;
@@ -27,6 +28,8 @@ interface AuctionDetails {
 })
 export class AuctionDetailsPage implements OnInit {
   $vm: Observable<AuctionDetails>;
+
+  environment = environment.maintenance;
 
   constructor(
     private route: ActivatedRoute,
