@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AuctionObserversService } from '../../../../../shared/services/auction-observers.service';
 import { AuctionSellerInvitation } from '../../../../../shared/models/auction-seller-invitation';
 import { AuctionTeamInvitation } from '../../../../../shared/models/auctionTeamInvitation';
+import { environment } from '../../../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-auction-list',
@@ -16,9 +17,11 @@ export class AuctionListPage implements OnInit {
   auctionInvitations$: Observable<AuctionSellerInvitation[]>;
 
   auctionTeamInvitations$: Observable<AuctionTeamInvitation[]>;
+
+  environment = environment.maintenance;
   constructor(
     private invitationsService: InvitationsService,
-    private auctionObserversService: AuctionObserversService
+    private auctionObserversService: AuctionObserversService,
   ) {}
 
   ngOnInit(): void {
