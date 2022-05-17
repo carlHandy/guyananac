@@ -1,4 +1,7 @@
 <header>
+  <ng-container *ngIf="environment == true">
+    <app-maintenance-message></app-maintenance-message>
+  </ng-container>
   <ng-container *ngIf="invitations$ | async as invitations">
     <ng-container *ngFor="let inv of invitations; trackBy: identify">
       <app-team-invitation-box [invitation]="inv"></app-team-invitation-box>
