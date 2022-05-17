@@ -1,3 +1,7 @@
+
+<ng-container *ngIf="environment == true">
+  <app-maintenance-message></app-maintenance-message>
+</ng-container>
 <div class="flex justify-between items-center mb-6">
   <div class="flex items-center">
     <i
@@ -13,9 +17,6 @@
     </button>
   </div>
 </div>
-<ng-container *ngIf="environment == true">
-  <app-maintenance-message></app-maintenance-message>
-</ng-container>
 <ng-container *ngIf="$vm | async as vm else noAuction">
   <!-- auction header -->
   <app-auction-card
