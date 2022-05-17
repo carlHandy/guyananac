@@ -27,6 +27,7 @@ import { AuctionDatePipe } from './pipes/auction-date.pipe';
 import { ScrollDirective } from './directives/scroll.directive';
 import { InviteCardComponent } from './components/invite-card/invite-card.component';
 import { LinksPipe } from './pipes/links.pipe';
+import { MaintenanceMessageComponent } from './components/maintenance-message/maintenance-message.component';
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -47,7 +48,8 @@ import { LinksPipe } from './pipes/links.pipe';
     AuctionDatePipe,
     ScrollDirective,
     InviteCardComponent,
-    LinksPipe
+    LinksPipe,
+    MaintenanceMessageComponent
   ],
   imports: [CommonModule, MaterialModule, ReactiveFormsModule],
   exports: [
@@ -68,7 +70,8 @@ import { LinksPipe } from './pipes/links.pipe';
     AuctionDatePipe,
     ScrollDirective,
     InviteCardComponent,
-    LinksPipe
+    LinksPipe,
+    MaintenanceMessageComponent,
   ],
 })
 export class SharedModule {}
