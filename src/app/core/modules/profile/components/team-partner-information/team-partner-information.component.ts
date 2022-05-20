@@ -78,7 +78,9 @@ export class TeamPartnerInformationComponent implements OnInit {
     this.partnerForm
       .get('companyName')
       .patchValue(this.partnerProfile.companyName);
-    this.partnerForm.get('shopUrl').patchValue(this.partnerProfile.shopPageURL);
+    this.partnerForm
+      .get('shopUrl')
+      .patchValue(this.partnerProfile.shopPageURL);
     this.partnerForm
       .get('companyDescription')
       .patchValue(this.partnerProfile.companyDesc);
@@ -133,13 +135,13 @@ export class TeamPartnerInformationComponent implements OnInit {
       country: this.team.teamCountry ?? AddressCountryEnum.Canada,
     };
 
-    const { companyName, companyDescription, companyHomePage } =
+    const { companyName, companyDescription, companyHomePage,shopUrl } =
       this.partnerForm.value;
     this.teamsService
       .updatePartner(
         this.team.teamId,
         companyName,
-        this.partnerProfile?.shopPageURL ?? '',
+        shopUrl,
         companyDescription,
         companyHomePage,
         this.partnerProfile?.logoURL ?? '',
