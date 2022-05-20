@@ -139,7 +139,7 @@ export class TeamPartnerInformationComponent implements OnInit {
       .updatePartner(
         this.team.teamId,
         companyName,
-        this.partnerProfile.shopPageURL ?? '',
+        this.partnerProfile?.shopPageURL ?? '',
         companyDescription,
         companyHomePage,
         this.partnerProfile?.logoURL ?? '',
@@ -217,6 +217,5 @@ export class TeamPartnerInformationComponent implements OnInit {
   // enables forms inputs
   enableForm() {
     this.partnerForm.enable();
-    this.partnerForm.get('shopUrl')?.disable();
   }
 }
