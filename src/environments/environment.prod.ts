@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  maintenance: true,
+  maintenance: false,
   appVersion: require('../../package.json').version,
   recaptcha: {
     siteKey: '6LcGLfodAAAAANxDaTurnGy7eA6hBxqk-JWNey4w',
