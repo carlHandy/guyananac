@@ -1,7 +1,6 @@
 <div
   class="
     w-screen
-    h-screen
     bg-white
     flex
     justify-center
@@ -21,7 +20,7 @@
       relative
       lg:flex lg:border-white lg:border-2
     "
-    style="height: 100%; max-height: 700px"
+    style="height: 100%;"
   >
     <div class="absolute left-1/2 mt-48 lg:mt-7">
       <div
@@ -170,8 +169,10 @@
               Forgot Password?
             </p>
           </div>
-          <div style="transform:scale(0.7);transform-origin:0;">
-            <re-captcha [(ngModel)]="captcha" name="captcha" required (resolved)="addTokenLog('Captcha Resolved', $event)"></re-captcha>
+          <div style="text-align:center;">
+            <div style="display:inline-block;transform:scale(0.7);">
+              <re-captcha [(ngModel)]="captcha" name="captcha" required (resolved)="addTokenLog('Captcha Resolved', $event)"></re-captcha>
+            </div>
           </div>
           <button
             *ngIf="!requesting; else loader"
