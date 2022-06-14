@@ -1,7 +1,6 @@
 <div
   class="
     w-screen
-    h-screen
     bg-white
     flex
     justify-center
@@ -184,8 +183,10 @@
             >
             <mat-error>Password must be at least 8 characters long, has 1 special character, 1 uppercase, 1 lowecase and 1 number</mat-error>
           </div>
-          <div style="transform:scale(0.7);transform-origin:0;">
-            <re-captcha [(ngModel)]="captcha" name="captcha" required (resolved)="addTokenLog('Captcha Resolved', $event)"></re-captcha>
+          <div style="text-align:center;">
+            <div style="display:inline-block;transform:scale(0.7);">
+              <re-captcha [(ngModel)]="captcha" name="captcha" required (resolved)="addTokenLog('Captcha Resolved', $event)"></re-captcha>
+            </div>
           </div>
             <div>
               <button
