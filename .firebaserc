@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "mx-seller-portal"
+    "default": "guyananac-prod"
   },
   "targets": {
-    "mx-seller-portal": {
+    "guyananac-prod": {
       "hosting": {
-        "mx-seller-portal": [
-          "mx-seller-portal"
+        "guyananac-prod": [
+          "guyananac-prod"
         ]
       }
     }

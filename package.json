@@ -1,6 +1,6 @@
 {
   "name": "seller-portal",
-  "version": "0.0.82",
+  "version": "0.0.85",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
