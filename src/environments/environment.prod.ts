@@ -1,19 +1,17 @@
 export const environment = {
-  production: true,
-  maintenance: true,
+  production: false,
   appVersion: require('../../package.json').version,
-  firebase: {
-    apiKey: 'AIzaSyD_hfDc7NWCsTWBkhtQk4jkDc9ch2BNYKU',
-    authDomain: 'seller.maxsold.dev',
-    projectId: 'mx-seller-portal',
-    storageBucket: 'mx-seller-portal.appspot.com',
-    messagingSenderId: '969854014217',
-    appId: '1:969854014217:web:eda1a2f77affed9cbf79d8',
-  },
-  zendeskUrl:
-    'https://static.zdassets.com/ekr/snippet.js?key=8bc5d1cc-52af-4029-80b4-68570862597c',
-  invitationEmailUrl: 'https://seller.maxsold.dev/',
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+ firebase: {
+  apiKey: "AIzaSyAolvTe3JAhs-p_TMWRkhSd42HwRtOS7To",
+  authDomain: "guyananac-prod.firebaseapp.com",
+  projectId: "guyananac-prod",
+  storageBucket: "guyananac-prod.appspot.com",
+  messagingSenderId: "397036527601",
+  appId: "1:397036527601:web:d116217a89ada55a8e6e50",
+  measurementId: "G-XK38SWBP81",
   cloudFunctionsBaseUrl:
-    'https://us-central1-mx-seller-portal.cloudfunctions.net/',
-  allowEmailChange: false,
+  'https://us-central1-guyananac-prod.cloudfunctions.net/',
+allowEmailChange: true,
+}
 };
