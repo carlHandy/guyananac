@@ -31,9 +31,9 @@ export class RegisterGuard implements CanActivate, CanLoad {
     return this.checkAccount();
   }
 
-  // checks whenever the seller is present in auth state
+  // checks whenever the athlete is present in auth state
   private checkAccount(): Observable<boolean> {
-    return this.authService.seller.pipe(
+    return this.authService.athlete.pipe(
       switchMap((seller) => {
         if (seller) {
           this.router.navigateByUrl('/auctions');

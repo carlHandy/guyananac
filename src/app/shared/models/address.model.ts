@@ -1,10 +1,9 @@
-import { AddressCountryEnum } from '../enums/address-country.enum';
+import { AddressCountry } from "../enums/address-country.enum";
 
-export interface Address {
-  address: string;
-  unitSuite: string;
-  cityTown: string;
-  stateProvince: string;
-  postalZip: string;
-  country: AddressCountryEnum;
+export class Address {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: AddressCountry;
 }

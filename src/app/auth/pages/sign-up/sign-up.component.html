@@ -1,6 +1,7 @@
 <div
   class="
     w-screen
+    h-screen
     bg-white
     flex
     justify-center
@@ -9,7 +10,7 @@
     bg-center bg-cover
     overflow-x-hidden
   "
-  style="background-image: url('assets/images/background_login.jpg')"
+  style="background-image: url('assets/images/signup-bg.jpg')"
 >
   <div
     class="
@@ -21,7 +22,7 @@
       lg:flex lg:border-white lg:border-2
       sign-up-box
     "
-    style="height: 100%"
+    style="height: 100%; max-height: 700px;;"
   >
     <div class="absolute left-1/2 mt-48 lg:mt-7">
       <div
@@ -49,7 +50,7 @@
             items-center
           "
         >
-          <h2 class="text-xs">SIGN UP</h2>
+          <h2 class="text-xs">REGISTER</h2>
         </div>
         <div
           class="
@@ -86,123 +87,24 @@
             items-center
             header-box
             bg-center bg-cover
-            lg:hidden
-          "
-          style="background-image: url('assets/images/background_login.jpg')"
+            lg:hidden"
         >
-          <img
-            class="h-16 animate__animated animate__fadeIn animate__delay-1s"
-            src="assets/images/logo.svg"
-            alt="Max sold logo"
-          />
         </div>
         <div class="bg-white px-8 pb-8 pt-20 lg:pt-28 h-full lg:rounded-l-2xl">
           <div class="text-left">
-            <h1 class="mt-0 text-4xl">
-              Register for the MaxSold Seller Portal
+            <h1 class="mt-0 text-3xl">
+             G.A.C Athlete Portal Registration
             </h1>
             <p class="mt-3 text-base">
-              Discover the easiest, most efficient and proven way to quickly sell
-              all your household and business goods.
+              Manage your profile, track national and international rankings, and more.
             </p>
           </div>
           <div class="mt-3">
             <app-auth-providers></app-auth-providers>
           </div>
-          <div class="my-6 flex justify-end items-center">
-            <div class="flex-grow bg-light-grey" style="height: 1px"></div>
-            <span class="mx-4 text-grey">OR</span>
-            <div class="flex-grow bg-light-grey" style="height: 1px"></div>
-          </div>
-          <form
-            [formGroup]="signUpForm"
-            (ngSubmit)="registerEmailPassword()"
-            class="flex flex-col"
-          >
-            <mat-form-field class="mb-2">
-              <input
-                matInput
-                placeholder="Email"
-                formControlName="email"
-                required
-              />
-            </mat-form-field>
-            <div
-              class="mb-2"
-              *ngIf="
-                (signUpForm.get('email')?.errors?.email ||
-                  signUpForm.get('email')?.errors?.pattern) &&
-                signUpForm.get('email').touched
-              "
-            >
-              <mat-error>The email is invalid</mat-error>
-            </div>
-            <mat-form-field class="mb-2">
-              <input
-                matInput
-                [type]="showPassword ? 'text' : 'password'"
-                placeholder="Password"
-                formControlName="password"
-                required
-              />
-              <i
-                matSuffix
-                class="las cursor-pointer"
-                [ngClass]="showPassword ? 'la-low-vision' : 'la-eye'"
-                (click)="showPassword = !showPassword"
-              ></i>
-            </mat-form-field>
-            <mat-form-field class="mb-3">
-              <input
-                matInput
-                [type]="showPasswordConf ? 'text' : 'password'"
-                placeholder="Confirm Password"
-                formControlName="passwordConfirmation"
-                required
-              />
-              <i
-                matSuffix
-                class="las cursor-pointer"
-                [ngClass]="showPasswordConf ? 'la-low-vision' : 'la-eye'"
-                (click)="showPasswordConf = !showPasswordConf"
-              ></i>
-            </mat-form-field>
-            <div
-              *ngIf="
-                signUpForm.hasError('noEqual') &&
-                signUpForm.get('passwordConfirmation').touched
-              "
-              class="flex justify-center mb-3"
-            >
-              <mat-error>Passwords don't match</mat-error>
-            </div>
-            <div
-              *ngIf="(signUpForm.get('password')?.errors?.pattern) &&
-              signUpForm.get('password').touched "
-              class="flex justify-center mb-3"
-            >
-            <mat-error>Password must be at least 8 characters long, has 1 special character, 1 uppercase, 1 lowecase and 1 number</mat-error>
-          </div>
-          <div style="text-align:center;">
-            <div style="display:inline-block;transform:scale(0.7);">
-              <re-captcha [(ngModel)]="captcha" name="captcha" required (resolved)="addTokenLog('Captcha Resolved', $event)"></re-captcha>
-            </div>
-          </div>
-            <div>
-              <button
-                *ngIf="!requesting; else loader"
-                mat-flat-button
-                [disabled]="signUpForm.invalid"
-                color="accent"
-              >
-                SIGN UP
-              </button>
-            </div>
-            <ng-template #loader>
-              <app-loader-box></app-loader-box>
-            </ng-template>
-          </form>
-        </div>
+            <p class="mt-3 text-base">
+              By registering, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+            </p>
       </div>
     </div>
     <div
@@ -218,15 +120,6 @@
         hidden
       "
     >
-      <img
-        class="
-          h-16
-          lg:h-10 lg:mt-8 lg:ml-8
-          animate__animated animate__fadeIn animate__delay-1s
-        "
-        src="assets/images/logo.svg"
-        alt="Max sold logo"
-      />
     </div>
   </div>
 </div>

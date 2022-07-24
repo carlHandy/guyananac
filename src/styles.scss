@@ -1,6 +1,6 @@
 :root {
   --color-primary: #2c2e30;
-  --color-accent: #1fa0ba;
+  --color-accent: #01796F;
   --color-secondary: #e7edf3;
 
   --color-grey: #8e999f;
@@ -63,23 +63,6 @@ mat-search-google-maps-autocomplete {
       }
     }
   }
-}
-
-// covid training mark
-.covid-trainning {
-  position: relative;
-}
-.covid-trainning:after {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 20px;
-  height: 25px;
-  right: 0;
-  bottom: 0;
-  background-image: url("assets/images/shield.png");
-  background-size: cover;
-  background-position: center;
 }
 
 // custom material input

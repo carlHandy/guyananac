@@ -7,18 +7,13 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // models
-import { AddressCountryEnum } from '@shared/enums/address-country.enum';
-import { Seller } from '@shared/models/seller.model';
+import { AddressCountry} from '@shared/enums/address-country.enum';
+import { Athlete } from '@shared/models/athlete.model';
+import { createBaseAthlete } from '@shared/utils/athlete';
 
 // services
 import { AuthService } from '@shared/services/auth.service';
-import { SellerService } from '@shared/services/seller.service';
-
-// utils
-import { TeamsService } from '@shared/services/teams.service';
-import { createBaseSeller } from '@shared/utils/seller';
-import { TimeZonesService } from '@shared/services/time-zones.service';
-import { AuthenticationTypeEnum } from '@shared/enums/authentication-type.enum';
+import { AthleteService } from '@shared/services/athlete.service';
 
 @Component({
   templateUrl: './sign-up-details.component.html',
@@ -37,21 +32,18 @@ import { AuthenticationTypeEnum } from '@shared/enums/authentication-type.enum';
 })
 export class SignUpDetailsComponent implements OnInit {
   accountForm: FormGroup;
-  countryEnum = AddressCountryEnum;
   requesting: boolean = false;
 
   constructor(
     private router: Router,
     private snackBar: MatSnackBar,
+    private athleteService: AthleteService,
     private authService: AuthService,
-    private sellerService: SellerService,
-    private teamsService: TeamsService,
-    private timeZonesService: TimeZonesService
   ) {
     this.accountForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      country: new FormControl(null, [Validators.required]),
+      isNationalAthlete: new FormControl(null, [Validators.required]),
     });
   }
 
@@ -68,29 +60,20 @@ export class SignUpDetailsComponent implements OnInit {
 
     // base user
     const baseUser = this.authService.baseUser;
-    const { firstName, lastName, country } = this.accountForm.value;
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    let sellerTimeZone = this.timeZonesService.defaultTimeZoneValue;
-    if (this.timeZonesService.containsTimeZone(userTimeZone)) {
-      sellerTimeZone = userTimeZone;
-    }
+    const { firstName, lastName, isNationalAthlete } = this.accountForm.value;
+  
 
-    const newSeller = createBaseSeller(
+    const newAthlete = createBaseAthlete(
       baseUser,
       firstName,
       lastName,
-      country,
-      sellerTimeZone
+      isNationalAthlete,
     );
 
-    this.sellerService
-      .createSeller(newSeller)
+    this.athleteService
+      .createAthlete(newAthlete)
       .then(() => {
-        if (baseUser.providerData[0].providerId === 'password') {
-          this.router.navigateByUrl('/auth/register-success');
-        } else {
-          this.router.navigateByUrl('/auctions');
-        }
+          this.router.navigateByUrl('/dashbord');
         // here i am assuming the user has not verified email
       })
       .catch((error) => {

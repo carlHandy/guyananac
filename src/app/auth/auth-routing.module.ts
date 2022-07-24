@@ -11,7 +11,6 @@ import { SignUpDetailsComponent } from './pages/sign-up-details/sign-up-details.
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { RegisterGuard } from './guards/register.guard';
 import { VerifyEmailPage } from './pages/verify-email/verify-email.page';
-import { TroubleSignInPage } from './pages/trouble-sign-in/trouble-sign-in.page';
 import { RegisterSuccessComponent } from './pages/register-success/register-success.component';
 
 const routes: Routes = [
@@ -22,11 +21,6 @@ const routes: Routes = [
       {
         path: 'sign-in',
         component: SignInComponent,
-        canActivate: [NoAuthGuard],
-      },
-      {
-        path: 'trouble-sign-in',
-        component: TroubleSignInPage,
         canActivate: [NoAuthGuard],
       },
       {

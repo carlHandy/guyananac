@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 // services
 import { AuthService } from '../../../shared/services/auth.service';
-import { SellerService } from '../../../shared/services/seller.service';
+import { AthleteService } from '../../../shared/services/athlete.service';
 import firebase from 'firebase/app';
 import * as CryptoJS from 'crypto-js';
 
@@ -19,7 +19,7 @@ export class AuthProvidersComponent {
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private sellerService: SellerService
+    private athleteService: AthleteService,
   ) {}
 
   // uses firebase library to sing in the user with popup
@@ -41,28 +41,28 @@ export class AuthProvidersComponent {
   // handles firebase response after user have been authenticated
   handleSubmitReference(user: firebase.User) {
     // user created for auth firebase
-    this.sellerService
-      .getSellerByEmail(user.email)
+    this.athleteService
+      .getAthleteByEmail(user.email)
       .then((data) => {
         if (data.docs.length === 1) {
           // document found
           const sellerId = data.docs[0].id;
           Promise.all([
-            this.sellerService.createUserReference(sellerId, user.uid),
+            this.athleteService.createUserReference(sellerId, user.uid),
           ])
             .then(() => {
               // references made successfully
-              this.router.navigateByUrl('/auctions');
+              this.router.navigateByUrl('/dashboard');
             })
             .catch(this.handleError);
         } else {
-          // no seller document found for this email
-          let sellerID = String(CryptoJS.SHA256('s' + user.email));
-          this.sellerService
-            .createUserReference(sellerID, user.uid)
+          // no athlete document found for this email
+          let athleteID = String(CryptoJS.SHA256('a' + user.email));
+          this.athleteService
+            .createUserReference(athleteID, user.uid)
             .then(() => {
               // references made successfuly
-              this.router.navigateByUrl('/auctions');
+              this.router.navigateByUrl('/dashboard');
             })
             .catch(this.handleError);
         }

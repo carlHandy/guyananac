@@ -33,9 +33,9 @@ export class NoAuthGuard implements CanActivate, CanLoad {
 
   // checks whenever the user is already authenticated
   private checkAccount(): Observable<boolean> {
-    return this.authService.seller.pipe(
-      map((seller) => {
-        if (seller) {
+    return this.authService.athlete.pipe(
+      map((athlete) => {
+        if (athlete) {
           this.router.navigateByUrl('/auctions');
           return false;
         } else {

@@ -10,7 +10,7 @@
     bg-center bg-cover
     overflow-x-hidden
   "
-  style="background-image: url('assets/images/background_login.jpg')"
+  style="background-image: url('assets/images/signup-bg.jpg')"
 >
   <div
     class="
@@ -89,13 +89,8 @@
             bg-center bg-cover
             lg:hidden
           "
-          style="background-image: url('assets/images/background_login.jpg')"
+          style="background-image: url('assets/images/login-bg.jpg')"
         >
-          <img
-            class="h-16 animate__animated animate__fadeIn animate__delay-1s"
-            src="assets/images/logo.svg"
-            alt="Max sold logo"
-          />
         </div>
         <div
           class="
@@ -140,22 +135,14 @@
                 required
               />
             </mat-form-field>
-            <p class="mb-2 font-medium">Where will auctions be held?</p>
+            <p class="mb-2 font-medium">Are you a current national player?</p>
             <mat-radio-group formControlName="country" class="mb-4 flex">
               <div class="w-2/4">
-                <mat-radio-button [value]="countryEnum.Canada"
-                  ><img
-                    class="w-8 inline-block mr-2"
-                    src="assets/images/flags/canada.png"
-                  />Canada</mat-radio-button
-                >
+                <mat-radio-button value="yes"></mat-radio-button>
               </div>
               <div class="w-2/4">
-                <mat-radio-button [value]="countryEnum.UnitedStates"
-                  ><img
-                    class="w-8 inline-block mr-2"
-                    src="assets/images/flags/usa.png"
-                  />United States</mat-radio-button
+                <mat-radio-button value="no"
+                  ></mat-radio-button
                 >
               </div>
             </mat-radio-group>
@@ -197,15 +184,6 @@
         hidden
       "
     >
-      <img
-        class="
-          h-16
-          lg:h-10 lg:mt-8 lg:ml-8
-          animate__animated animate__fadeIn animate__delay-1s
-        "
-        src="assets/images/logo.svg"
-        alt="Max sold logo"
-      />
     </div>
   </div>
 </div>

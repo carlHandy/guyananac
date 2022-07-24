@@ -16,7 +16,6 @@ import { Observable, of } from 'rxjs';
 // services
 import { AuthService } from '../../shared/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthenticationTypeEnum } from '@shared/enums/authentication-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -41,11 +40,11 @@ export class AuthGuard implements CanActivate, CanLoad {
     return this.checkAccount();
   }
 
-  // checks if user and seller are present in the auth state
+  // checks if user and athlete are present in the auth state
   private checkAccount(): Observable<boolean> {
-    return this.authService.seller.pipe(
-      switchMap((seller) => {
-        if (!seller) {
+    return this.authService.athlete.pipe(
+      switchMap((athlete) => {
+        if (!athlete) {
           return this.authService.user.pipe(
             map((user) => {
               if (user) {
@@ -56,30 +55,6 @@ export class AuthGuard implements CanActivate, CanLoad {
                 this.router.navigateByUrl('/auth/sign-in');
               }
               return false;
-            })
-          );
-        } else {
-          return this.authService.user.pipe(
-            map((user) => {
-              if (user) {
-                if (
-                  user.providerData[0].providerId === 'password' &&
-                  !user.emailVerified
-                ) {
-                  // USER FOUND - SELLER FOUND - EMAIL NOT VALIDATED
-                  this.authService.logoutNoRedirect();
-
-                  this.router.navigateByUrl('/auth/sign-in');
-                  return false;
-                } else {
-                  // USER FOUND - SELLER FOUND - EMAIL VALIDATED
-                  return true;
-                }
-              } else {
-                // USER NOT FOUND - SELLER FOUND'
-                this.router.navigateByUrl('/auth/sign-in');
-                return false;
-              }
             })
           );
         }

@@ -15,7 +15,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { map, switchMap, tap, filter } from 'rxjs/operators';
 
 // models
-import { Seller } from '../models/seller.model';
+import { Athlete } from '../models/athlete.model';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -24,8 +24,8 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   baseUser: firebase.User;
   user$: Observable<firebase.User>;
-  baseSeller: Seller;
-  seller$: Observable<Seller>;
+  baseAthlete: Athlete;
+  athlete$: Observable<Athlete>;
 
   constructor(
     private auth: AngularFireAuth,
@@ -57,19 +57,19 @@ export class AuthService {
       .getRedirectResult()
       .then((result) => {
         if (result.credential) {
-          this.router.navigateByUrl('/auctions');
+          this.router.navigateByUrl('/dashboard');
         }
       })
       .catch((error) => {});
 
-    // observable of seller if user is present
-    this.seller$ = this.auth.authState.pipe(
+    // observable of athlete if user is present
+    this.athlete$ = this.auth.authState.pipe(
       switchMap((user) => {
         if (user) {
           // user found
           this.baseUser = user;
-          // attempt to build the seller
-          return this.generateSeller(user);
+          // attempt to build the athlete
+          return this.generateAthlete(user);
         } else {
           // not user
           return of(null);
@@ -88,16 +88,6 @@ export class AuthService {
   // logs out the user without redirect
   logoutNoRedirect() {
     this.auth.signOut().then(() => {});
-  }
-
-  // firebase sign in with email/password
-  signInEmailPassword(email: string, password: string) {
-    return this.auth.signInWithEmailAndPassword(email, password);
-  }
-
-  // firebase sign up with email/password
-  registerEmailPassword(email: string, password: string) {
-    return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
   // sends email verification for a given user
@@ -131,67 +121,57 @@ export class AuthService {
     return this.auth.signInWithRedirect(provider);
   }
 
-  // sends password reset email
-  changeUserPassword(email: string) {
-    return this.auth.sendPasswordResetEmail(email);
-  }
-
-  // updates logged user email
-  changeUserEmail(email: string) {
-    return this.baseUser.updateEmail(email);
-  }
-
   // user getter
   get user(): Observable<firebase.User | null> {
     return this.user$;
   }
 
-  // seller getter
-  get seller(): Observable<Seller | null> {
-    return this.seller$;
+  // athlete getter
+  get athlete(): Observable<Athlete | null> {
+    return this.athlete$;
   }
 
-  // tries to generate seller with a given user uid
-  // the user uid is used to link the logged user with his seller obj
-  generateSeller(firebaseUser: firebase.User): Observable<Seller | null> {
+  // tries to generate athlete with a given user uid
+  // the user uid is used to link the logged user with his athlete obj
+  generateAthlete(firebaseUser: firebase.User): Observable<Athlete | null> {
     // check if there is a reference with this user uid
     return this.checkUserReference(firebaseUser.uid).pipe(
       switchMap((ref) => {
         if (!ref) {
-          // get seller with its own id
-          return this.getSeller(firebaseUser.uid);
+          // get athlete with its own id
+          return this.getAthlete(firebaseUser.uid);
         }
-        // if seller existed before sign u[]
-        return this.getSeller(ref.sellerId);
+        // if athlete existed before sign u[]
+        return this.getAthlete(ref.athleteId);
       }),
-      tap((seller) => {
+      tap((athlete) => {
         // updating local obj
-        this.baseSeller = seller;
+        this.baseAthlete = athlete;
       })
     );
   }
 
   // checks if exists a reference with the giver user uid
-  checkUserReference(uid: string): Observable<{ sellerId: string } | null> {
+  checkUserReference(uid: string): Observable<{ athleteId: string } | null> {
     return this.firestore
       .collection('users')
-      .doc<{ sellerId: string }>(uid)
+      .doc<{ athleteId: string }>(uid)
       .valueChanges()
       .pipe((doc) => (doc ? doc : null));
   }
 
-  // get seller by id
-  getSeller(sellerId: string): Observable<Seller> {
+  // get athlete by id
+  getAthlete(athleteId: string): Observable<Athlete> {
     return this.firestore
-      .collection('sellers')
-      .doc<Seller>(sellerId)
+      .collection('athletes')
+      .doc<Athlete>(athleteId)
       .valueChanges()
       .pipe(
-        map((seller) => (seller ? seller : null)),
-        tap((seller) => {
-          if (seller) {
+        map((athlete) => (athlete ? athlete : null)),
+        tap((athlete) => {
+          if (athlete) {
             if (!environment.production) {
-              console.log(seller.sellerId);
+              console.log(athlete.athleteId);
             }
           }
         })
