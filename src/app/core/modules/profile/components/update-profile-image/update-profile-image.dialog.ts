@@ -11,7 +11,7 @@ import { finalize } from 'rxjs/operators';
 
 // services
 import { AuthService } from '../../../../../shared/services/auth.service';
-import { SellerService } from '../../../../../shared/services/seller.service';
+import { AthleteService } from '../../../../../shared/services/athlete.service';
 
 interface DialogData {
   base: string;
@@ -38,7 +38,7 @@ export class UpdateProfileImageDialog {
     public dialogRef: MatDialogRef<UpdateProfileImageDialog>,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private sellerService: SellerService,
+    private athleteService: AthleteService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 

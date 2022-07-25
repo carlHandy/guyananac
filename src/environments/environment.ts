@@ -12,6 +12,5 @@ export const environment = {
   measurementId: "G-XK38SWBP81",
   cloudFunctionsBaseUrl:
   'https://us-central1-guyananac-prod.cloudfunctions.net/',
-allowEmailChange: true,
 }
 };

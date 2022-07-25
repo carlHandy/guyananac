@@ -48,10 +48,10 @@ export class AuthGuard implements CanActivate, CanLoad {
           return this.authService.user.pipe(
             map((user) => {
               if (user) {
-                // USER FOUND - SELLER NOT FOUND
+                // USER FOUND - ATHLETE NOT FOUND
                 this.router.navigateByUrl('/auth/sign-up/details');
               } else {
-                // USER NOT FOUND - SELLER NOT FOUND
+                // USER NOT FOUND - ATHLETE NOT FOUND
                 this.router.navigateByUrl('/auth/sign-in');
               }
               return false;

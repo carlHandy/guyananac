@@ -4,30 +4,30 @@ import { CommonModule } from '@angular/common';
 // modules
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileRoutingModule } from './profile-routing.module';
-// import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
 
 // components
-// import { SellerPersonalInformationComponent } from './components/seller-personal-information/seller-personal-information.component';
+import { AthletePersonalInformationComponent } from './components/athlete-personal-information/athlete-personal-information.component';
 // import { TeamPartnerInformationComponent } from './components/team-partner-information/team-partner-information.component';
-// import { SellerAuthInformationComponent } from './components/seller-auth-information/seller-auth-information.component';
-// import { UpdateProfileImageDialog } from './components/update-profile-image/update-profile-image.dialog';
-// import { SellerTeamsListComponent } from './components/seller-teams-list/seller-teams-list.component';
+// import { athleteAuthInformationComponent } from './components/athlete-auth-information/athlete-auth-information.component';
+import { UpdateProfileImageDialog } from './components/update-profile-image/update-profile-image.dialog';
+// import { athleteTeamsListComponent } from './components/athlete-teams-list/athlete-teams-list.component';
 // import { TeamAddMemberComponent } from './components/team-add-member/team-add-member.component';
-// import { SellerSummaryComponent } from './components/athlete-summary/athlete-summary.component';
+import { AthleteSummaryComponent } from './components/athlete-summary/athlete-summary.component';
 // import { TeamDetailsComponent } from './components/team-details/team-details.component';
 // import { CreateTeamDialog } from './components/create-team/create-team.dialog';
 import { ProfileComponent } from './profile.component';
 
 @NgModule({
   declarations: [
-    // UpdateProfileImageDialog,
+    UpdateProfileImageDialog,
     ProfileComponent,
     // CreateTeamDialog,
     // TeamPartnerInformationComponent,
-    // SellerSummaryComponent,
-    // SellerPersonalInformationComponent,
-    // SellerTeamsListComponent,
+    AthleteSummaryComponent,
+    AthletePersonalInformationComponent,
+    // athleteTeamsListComponent,
     // TeamAddMemberComponent,
     // TeamDetailsComponent,
   ],
@@ -35,7 +35,7 @@ import { ProfileComponent } from './profile.component';
     ProfileRoutingModule,
     ReactiveFormsModule,
     CommonModule,
-    // SharedModule,
+    SharedModule,
     FormsModule,
     NgxMaskModule,
   ],

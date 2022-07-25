@@ -38,7 +38,7 @@ export class AthleteSummaryComponent implements OnInit {
     this.athlete$ = this.authService.athlete;
   }
 
-  // open profile image dialog for updating seller image
+  // open profile image dialog for updating athlete image
   openProfileImageDialog() {
     const dialogRef = this.dialog.open(UpdateProfileImageDialog, {
       data: {

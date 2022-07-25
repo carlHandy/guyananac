@@ -46,9 +46,9 @@ export class AuthProvidersComponent {
       .then((data) => {
         if (data.docs.length === 1) {
           // document found
-          const sellerId = data.docs[0].id;
+          const altheleId = data.docs[0].id;
           Promise.all([
-            this.athleteService.createUserReference(sellerId, user.uid),
+            this.athleteService.createUserReference(altheleId, user.uid),
           ])
             .then(() => {
               // references made successfully
@@ -62,7 +62,7 @@ export class AuthProvidersComponent {
             .createUserReference(athleteID, user.uid)
             .then(() => {
               // references made successfuly
-              this.router.navigateByUrl('/dashboard');
+              this.router.navigateByUrl('/profile');
             })
             .catch(this.handleError);
         }

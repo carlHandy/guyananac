@@ -88,46 +88,15 @@
           ></i>
         </mat-form-field>
       </div>
-
-      <div class="w-full lg:w-2/4 lg:pl-1">
-        <mat-form-field class="w-full">
-          <mat-label>Time zone</mat-label>
-          <mat-select formControlName="timeZone">
-            <mat-option
-              *ngFor="let zone of timeZones"
-              [value]="zone.timezoneValue"
-              >{{ zone.timezoneLabel }}</mat-option
-            >
-          </mat-select>
-          <i
-            *ngIf="personaInformation.get('timeZone').valid && editMode"
-            matSuffix
-            class="las la-check text-success"
-          ></i>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="w-full mb-6">
-      <mat-radio-group
-        class="mb-4 flex items-center"
-        formControlName="contactMethod"
-      >
-        <h2 class="mr-4 text-xs text-grey uppercase">
-          Preferred Contact Method
-        </h2>
-
-        <mat-radio-button value="email" class="mr-4">Email</mat-radio-button>
-        <mat-radio-button value="phone" class="mr-4">Phone</mat-radio-button>
-      </mat-radio-group>
     </div>
   </form>
   <div>
     <app-address-form
       [disabled]="!editMode"
       [editMode]="editMode"
-      *ngIf="sellerCountry"
-      [address]="sellerAddress"
-      [country]="sellerCountry"
+      *ngIf="athleteCountry"
+      [address]="athleteAddress"
+      [country]="athleteCountry"
     ></app-address-form>
   </div>
 </mat-card>

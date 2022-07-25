@@ -57,7 +57,7 @@ export class AuthService {
       .getRedirectResult()
       .then((result) => {
         if (result.credential) {
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/profile');
         }
       })
       .catch((error) => {});

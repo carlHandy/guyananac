@@ -36,7 +36,7 @@ export class NoAuthGuard implements CanActivate, CanLoad {
     return this.authService.athlete.pipe(
       map((athlete) => {
         if (athlete) {
-          this.router.navigateByUrl('/auctions');
+          this.router.navigateByUrl('/profile');
           return false;
         } else {
           return true;
